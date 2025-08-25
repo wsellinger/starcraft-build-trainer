@@ -1,0 +1,46 @@
+[gd_scene load_steps=2 format=3 uid="uid://yjjrd7rhl57a"]
+
+[ext_resource type="Script" uid="uid://cfla35a0m0cgq" path="res://scripts/ObjectiveControl.cs" id="1_kr3f1"]
+
+[node name="ObjectiveControl" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 528.0
+offset_bottom = 176.0
+script = ExtResource("1_kr3f1")
+
+[node name="ObjectiveLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 200.0
+offset_top = 40.0
+offset_right = 741.0
+offset_bottom = 90.0
+theme_override_font_sizes/font_size = 32
+text = "Mine 1000 Minerals"
+
+[node name="TimerLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 200.0
+offset_top = 96.0
+offset_right = 264.0
+offset_bottom = 141.0
+theme_override_font_sizes/font_size = 32
+text = "7:00"
+
+[node name="TimerStatic" type="Label" parent="."]
+layout_mode = 0
+offset_left = 88.0
+offset_top = 96.0
+offset_right = 187.0
+offset_bottom = 141.0
+theme_override_font_sizes/font_size = 32
+text = "Timer:"
+
+[node name="ObjectiveStatic" type="Label" parent="."]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 40.0
+offset_right = 208.0
+offset_bottom = 90.0
+theme_override_font_sizes/font_size = 32
+text = "Objective:"

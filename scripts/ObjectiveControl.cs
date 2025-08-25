@@ -1,0 +1,57 @@
+using Godot;
+using System;
+
+namespace starcraftbuildtrainer.scripts
+{
+    public partial class ObjectiveControl : Control
+    {
+        [Signal] public delegate void ObjectiveCompleteEventHandler();
+        [Signal] public delegate void ObjectiveFailedEventHandler();
+
+        private Label _objectiveLabel;
+        private Label _timerLabel;
+
+        private double _timerSeconds = 0;
+
+        private const string OBJECTIVE_LABEL_NAME = "ObjectiveLabel";
+        private const string TIMER_LABEL_NAME = "TimerLabel";
+
+        private readonly TimeSpan INITIAL_TIMER_SPAN = new(0, 1, 0);
+        private const string TIMER_FORMAT = @"mm\:ss";
+
+        private const int MINERAL_WIN_COUNT = 750;
+        private const string OBJECTIVE_FORMAT = "Mine {0} Minerals";
+
+        public override void _Ready()
+        {
+            _objectiveLabel = GetNode<Label>(OBJECTIVE_LABEL_NAME);
+            _timerLabel = GetNode<Label>(TIMER_LABEL_NAME);
+
+            Init();
+        }
+
+        public override void _Process(double delta)
+        {
+            //Update Timer
+            _timerSeconds -= delta;
+            _timerLabel.Text = TimeSpan.FromSeconds(_timerSeconds).ToString(TIMER_FORMAT);
+
+            if (_timerSeconds <= 0)
+                EmitSignal(SignalName.ObjectiveFailed);
+        }
+
+        public void Init()
+        {
+            _objectiveLabel.Text = string.Format(OBJECTIVE_FORMAT, MINERAL_WIN_COUNT);
+            _timerSeconds = INITIAL_TIMER_SPAN.TotalSeconds;
+        }
+
+        public static bool IsObjectiveComplete(double mineralCount) => mineralCount >= MINERAL_WIN_COUNT;
+
+        public void CheckObjectiveComplete(double mineralCount)
+        {
+            if (mineralCount >= MINERAL_WIN_COUNT)
+                EmitSignal(SignalName.ObjectiveComplete);
+        }
+    }
+}

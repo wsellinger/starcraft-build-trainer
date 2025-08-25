@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bm46ys1npg741"]
+[gd_scene load_steps=8 format=3 uid="uid://bm46ys1npg741"]
 
 [ext_resource type="Script" uid="uid://vw4kgabkijq3" path="res://scripts/Main.cs" id="1_o5qli"]
 [ext_resource type="Texture2D" uid="uid://davnasmqxfk2i" path="res://assets/art/shared/minerals.png" id="2_sugp2"]
@@ -6,11 +6,12 @@
 [ext_resource type="Texture2D" uid="uid://cjb6r1y06efln" path="res://assets/art/terran/buildings/commandCenter.png" id="4_jyhfs"]
 [ext_resource type="Texture2D" uid="uid://cqhxj8cryn0qm" path="res://assets/art/terran/units/scv.png" id="4_tbgi4"]
 [ext_resource type="Texture2D" uid="uid://bw4licvck64er" path="res://assets/art/shared/mineralFields.png" id="6_tefeu"]
+[ext_resource type="PackedScene" uid="uid://yjjrd7rhl57a" path="res://scenes/objectiveControl.tscn" id="7_o6xl0"]
 
 [node name="Main" type="CanvasLayer"]
 script = ExtResource("1_o5qli")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -22,104 +23,74 @@ color = Color(0.23, 0.187757, 0.1426, 1)
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -440.0
-offset_top = 40.0
-offset_right = -306.0
-offset_bottom = 85.0
+offset_left = -448.0
+offset_top = 24.0
+offset_right = -314.0
+offset_bottom = 69.0
 grow_horizontal = 0
 theme_override_font_sizes/font_size = 32
-text = "Minerals"
+text = "100000"
 vertical_alignment = 2
 
 [node name="GasLabel" type="Label" parent="."]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -184.0
-offset_top = 40.0
-offset_right = -64.0
-offset_bottom = 85.0
+offset_left = -256.0
+offset_top = 24.0
+offset_right = -136.0
+offset_bottom = 69.0
 grow_horizontal = 0
 theme_override_font_sizes/font_size = 32
-text = "Gas"
+text = "100000"
 vertical_alignment = 2
 
 [node name="WorkersLabel" type="Label" parent="."]
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = 344.0
-offset_top = -24.0
-offset_right = 474.0
-offset_bottom = 21.0
+offset_left = 280.0
+offset_top = -156.0
+offset_right = 352.0
+offset_bottom = -111.0
 grow_vertical = 2
 theme_override_font_sizes/font_size = 32
-text = "Workers"
+text = "0"
 vertical_alignment = 2
 
 [node name="WorkerButton" type="Button" parent="."]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -42.0
-offset_top = -42.0
-offset_right = 42.0
-offset_bottom = 42.0
+anchors_preset = -1
+anchor_top = 0.267
+anchor_bottom = 0.267
+offset_left = 358.0
+offset_top = 17.76
+offset_right = 442.0
+offset_bottom = 101.76
 grow_horizontal = 2
 grow_vertical = 2
 icon = ExtResource("4_jyhfs")
 icon_alignment = 1
 
 [node name="MineralsIcon" type="Sprite2D" parent="."]
-position = Vector2(800, 60)
+position = Vector2(800, 39)
 texture = ExtResource("2_sugp2")
 
 [node name="GasIcon" type="Sprite2D" parent="."]
-position = Vector2(1056, 60)
+position = Vector2(992, 39)
 texture = ExtResource("3_jyhfs")
 
 [node name="WorkerIcon" type="Sprite2D" parent="."]
-position = Vector2(294, 366)
+position = Vector2(208, 227)
 texture = ExtResource("4_tbgi4")
 
 [node name="MineralFields" type="Sprite2D" parent="."]
-position = Vector2(144, 360)
-scale = Vector2(0.49, 0.49)
+position = Vector2(106.073, 224.006)
+scale = Vector2(0.261276, 0.261276)
 texture = ExtResource("6_tefeu")
 
-[node name="ObjectiveLabel" type="Label" parent="."]
-offset_left = 200.0
-offset_top = 40.0
-offset_right = 741.0
-offset_bottom = 90.0
-theme_override_font_sizes/font_size = 32
-text = "Mine 1000 Minerals"
-
-[node name="TimerLabel" type="Label" parent="."]
-offset_left = 200.0
-offset_top = 96.0
-offset_right = 264.0
-offset_bottom = 141.0
-theme_override_font_sizes/font_size = 32
-text = "7:00"
-
-[node name="TimerStatic" type="Label" parent="."]
-offset_left = 88.0
-offset_top = 96.0
-offset_right = 187.0
-offset_bottom = 141.0
-theme_override_font_sizes/font_size = 32
-text = "Timer:"
-
-[node name="ObjectiveStatic" type="Label" parent="."]
-offset_left = 32.0
-offset_top = 40.0
-offset_right = 208.0
-offset_bottom = 90.0
-theme_override_font_sizes/font_size = 32
-text = "Objective:"
+[node name="ObjectiveControl" parent="." instance=ExtResource("7_o6xl0")]
+offset_right = 528.0
+offset_bottom = 176.0
 
 [node name="VictoryScreen" type="Control" parent="."]
 visible = false
@@ -211,18 +182,18 @@ text = "Restart"
 icon_alignment = 1
 
 [node name="WorkerProgressBar" type="ProgressBar" parent="."]
-offset_left = 608.0
-offset_top = 408.0
-offset_right = 763.0
-offset_bottom = 435.0
+offset_left = 368.0
+offset_top = 300.0
+offset_right = 523.0
+offset_bottom = 327.0
 scale = Vector2(0.465, 0.465)
 max_value = 1.0
 
 [node name="WorkerQueueLabel" type="Label" parent="."]
-offset_left = 600.0
-offset_top = 408.0
-offset_right = 615.0
-offset_bottom = 431.0
+offset_left = 360.0
+offset_top = 300.0
+offset_right = 375.0
+offset_bottom = 323.0
 scale = Vector2(0.525, 0.525)
 text = "0"
 horizontal_alignment = 1
