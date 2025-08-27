@@ -1,0 +1,87 @@
+[gd_scene load_steps=5 format=3 uid="uid://br0afaoskdis6"]
+
+[ext_resource type="Script" uid="uid://bfw40mdu6dl8v" path="res://scripts/OutpostControl.cs" id="1_5e1d3"]
+[ext_resource type="Texture2D" uid="uid://cjb6r1y06efln" path="res://assets/art/terran/buildings/commandCenter.png" id="1_ako1t"]
+[ext_resource type="Texture2D" uid="uid://cqhxj8cryn0qm" path="res://assets/art/terran/units/scv.png" id="2_5e1d3"]
+[ext_resource type="Texture2D" uid="uid://bw4licvck64er" path="res://assets/art/shared/mineralFields.png" id="3_xywv2"]
+
+[node name="OutpostControl" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 576.0
+offset_bottom = 256.0
+script = ExtResource("1_5e1d3")
+
+[node name="WorkersLabel" type="Label" parent="."]
+layout_mode = 1
+offset_left = 200.0
+offset_top = 14.0
+offset_right = 272.0
+offset_bottom = 59.0
+theme_override_font_sizes/font_size = 32
+text = "0"
+vertical_alignment = 2
+
+[node name="WorkerIcon" type="TextureRect" parent="."]
+layout_mode = 1
+offset_left = 108.0
+offset_right = 184.0
+offset_bottom = 76.0
+texture = ExtResource("2_5e1d3")
+
+[node name="MineralFields" type="TextureRect" parent="."]
+layout_mode = 1
+offset_right = 341.0
+offset_bottom = 245.0
+scale = Vector2(0.261276, 0.261276)
+texture = ExtResource("3_xywv2")
+
+[node name="TownhallButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -42.0
+offset_top = -42.0
+offset_right = 42.0
+offset_bottom = 42.0
+grow_horizontal = 2
+grow_vertical = 2
+icon = ExtResource("1_ako1t")
+icon_alignment = 1
+
+[node name="WorkerProgressBar" type="ProgressBar" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = 44.0
+offset_right = 125.0
+offset_bottom = 71.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.465, 0.465)
+max_value = 1.0
+
+[node name="WorkerQueueLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -39.5
+offset_top = 44.5
+offset_right = -24.5
+offset_bottom = 67.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.525, 0.525)
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -10,6 +10,8 @@ namespace starcraftbuildtrainer.scripts
         private Label _objectiveLabel;
         private Label _timerLabel;
 
+        private ObjectiveState _state;
+
         private double _timerSeconds = 0;
 
         private const string OBJECTIVE_LABEL_NAME = "ObjectiveLabel";
@@ -31,6 +33,9 @@ namespace starcraftbuildtrainer.scripts
 
         public override void _Process(double delta)
         {
+            if (_state != ObjectiveState.InProgress)
+                return;
+
             //Update Timer
             _timerSeconds -= delta;
             _timerLabel.Text = TimeSpan.FromSeconds(_timerSeconds).ToString(TIMER_FORMAT);
@@ -41,6 +46,7 @@ namespace starcraftbuildtrainer.scripts
 
         public void Init()
         {
+            _state = ObjectiveState.InProgress;
             _objectiveLabel.Text = string.Format(OBJECTIVE_FORMAT, MINERAL_WIN_COUNT);
             _timerSeconds = INITIAL_TIMER_SPAN.TotalSeconds;
         }

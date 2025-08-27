@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://cogynxfv56566"]
+[gd_scene load_steps=2 format=3 uid="uid://cogynxfv56566"]
+
+[ext_resource type="Script" uid="uid://dxuhi40hfoq4o" path="res://scripts/GameOverControl.cs" id="1_cwe70"]
 
 [node name="GameOverControl" type="Control"]
 layout_mode = 3
@@ -7,6 +9,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_cwe70")
 
 [node name="VictoryScreen" type="Control" parent="."]
 visible = false

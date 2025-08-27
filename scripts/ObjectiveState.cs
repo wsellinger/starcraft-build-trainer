@@ -4,7 +4,7 @@ namespace starcraftbuildtrainer.scripts
     public enum ObjectiveState
     {
         None,
-        Incomplete,
+        InProgress,
         Complete,
         Failed
     }

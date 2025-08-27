@@ -27,8 +27,13 @@ namespace starcraftbuildtrainer.scripts
             _restartButton.Pressed += OnRestartButtonPressed;
         }
 
-        public override void _Process(double delta)
+        public void Init()
         {
+            IsGameOver = false;
+
+            _victoryScreen.Hide();
+            _defeatScreen.Hide();
+            _restartButton.Hide();
         }
 
         public void GameOver(ObjectiveState state)
@@ -55,17 +60,7 @@ namespace starcraftbuildtrainer.scripts
 
         private void OnRestartButtonPressed()
         {
-            Init();
             EmitSignal(SignalName.Restart);
-        }
-
-        private void Init()
-        {
-            IsGameOver = false;
-
-            _victoryScreen.Hide();
-            _defeatScreen.Hide();
-            _restartButton.Hide();
         }
     }
 }

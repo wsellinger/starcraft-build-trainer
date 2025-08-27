@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://dwhswro8m4g78"]
+[gd_scene load_steps=4 format=3 uid="uid://dwhswro8m4g78"]
 
 [ext_resource type="Texture2D" uid="uid://davnasmqxfk2i" path="res://assets/art/shared/minerals.png" id="1_05i8v"]
+[ext_resource type="Script" uid="uid://crnv0ixg5parg" path="res://scripts/ResourceControl.cs" id="1_gd00g"]
 [ext_resource type="Texture2D" uid="uid://uobgkr3ptg46" path="res://assets/art/shared/gas.png" id="2_68jcg"]
 
 [node name="ResourceControl" type="Control"]
@@ -8,6 +9,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+script = ExtResource("1_gd00g")
 
 [node name="MineralsLabel" type="Label" parent="."]
 layout_mode = 1
