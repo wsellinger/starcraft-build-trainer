@@ -1,12 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://bm46ys1npg741"]
+[gd_scene load_steps=10 format=3 uid="uid://bm46ys1npg741"]
 
 [ext_resource type="Script" uid="uid://vw4kgabkijq3" path="res://scripts/Main.cs" id="1_o5qli"]
 [ext_resource type="Texture2D" uid="uid://cjb6r1y06efln" path="res://assets/art/terran/buildings/commandCenter.png" id="4_jyhfs"]
 [ext_resource type="Texture2D" uid="uid://cqhxj8cryn0qm" path="res://assets/art/terran/units/scv.png" id="4_tbgi4"]
-[ext_resource type="PackedScene" uid="uid://dwhswro8m4g78" path="res://scenes/resourceControl.tscn" id="5_o6xl0"]
+[ext_resource type="PackedScene" uid="uid://dwhswro8m4g78" path="res://scenes/resource_control.tscn" id="5_o6xl0"]
 [ext_resource type="Texture2D" uid="uid://bw4licvck64er" path="res://assets/art/shared/mineralFields.png" id="6_tefeu"]
 [ext_resource type="Script" uid="uid://crnv0ixg5parg" path="res://scripts/ResourceControl.cs" id="6_tipki"]
-[ext_resource type="PackedScene" uid="uid://yjjrd7rhl57a" path="res://scenes/objectiveControl.tscn" id="7_o6xl0"]
+[ext_resource type="PackedScene" uid="uid://yjjrd7rhl57a" path="res://scenes/objective_control.tscn" id="7_o6xl0"]
+[ext_resource type="PackedScene" uid="uid://cogynxfv56566" path="res://scenes/game_over_control.tscn" id="8_85g3d"]
+[ext_resource type="Script" uid="uid://dxuhi40hfoq4o" path="res://scripts/GameOverControl.cs" id="9_choun"]
 
 [node name="Main" type="CanvasLayer"]
 script = ExtResource("1_o5qli")
@@ -67,94 +69,8 @@ script = ExtResource("6_tipki")
 
 [node name="ObjectiveControl" parent="." instance=ExtResource("7_o6xl0")]
 
-[node name="VictoryScreen" type="Control" parent="."]
-visible = false
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="ColorRect" type="ColorRect" parent="VictoryScreen"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.0832, 0.33376, 0.64, 1)
-
-[node name="Label" type="Label" parent="VictoryScreen"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -132.5
-offset_top = -44.0
-offset_right = 132.5
-offset_bottom = 44.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 64
-text = "VICTORY"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="DefeatScreen" type="Control" parent="."]
-visible = false
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="ColorRect" type="ColorRect" parent="DefeatScreen"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.12, 0.12, 0.12, 1)
-
-[node name="Label" type="Label" parent="DefeatScreen"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -132.5
-offset_top = -44.0
-offset_right = 132.5
-offset_bottom = 44.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 64
-text = "DEFEAT"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="RestartButton" type="Button" parent="."]
-visible = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -60.0
-offset_top = 96.0
-offset_right = 60.0
-offset_bottom = 149.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 32
-text = "Restart"
-icon_alignment = 1
+[node name="GameOverControl" parent="." instance=ExtResource("8_85g3d")]
+script = ExtResource("9_choun")
 
 [node name="WorkerProgressBar" type="ProgressBar" parent="."]
 offset_left = 368.0

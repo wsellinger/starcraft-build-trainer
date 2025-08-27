@@ -10,13 +10,10 @@ namespace starcraftbuildtrainer.scripts
         private Label _workerQueueLabel;
 
         private Button _workerButton;
-        private Button _restartButton;
-
-        private Control _victoryScreen;
-        private Control _defeatScreen;
 
         private ResourceControl _resourceControl;
         private ObjectiveControl _objectiveControl;
+        private GameOverControl _gameOverControl;
 
         private ProgressBar _workerProgressBar;
 
@@ -24,22 +21,17 @@ namespace starcraftbuildtrainer.scripts
         private const string WORKER_QUEUE_LABEL_NAME = "WorkerQueueLabel";
 
         private const string WORKER_BUTTON_NAME = "WorkerButton";
-        private const string RESTART_BUTTON_NAME = "RestartButton";
-
-        private const string VICTORY_SCREEN_NAME = "VictoryScreen";
-        private const string DEFEAT_SCREEN_NAME = "DefeatScreen";
 
         private const string WORKER_PROGRESS_BAR_NAME = "WorkerProgressBar";
 
         private const string OBJECTIVE_CONTROL_NAME = "ObjectiveControl";
         private const string RESOURCE_CONTROL_NAME = "ResourceControl";
+        private const string GAME_OVER_CONTROL_NAME = "GameOverControl";
 
         //Data
 
         private int _mineralWorkersCount;
         private int _gasWorkersCount;
-
-        private bool _isGameOver;
 
         //Build Worker
 
@@ -62,23 +54,19 @@ namespace starcraftbuildtrainer.scripts
             _workersLabel = GetNode<Label>(WORKERS_LABEL_NAME);
             _workerQueueLabel = GetNode<Label>(WORKER_QUEUE_LABEL_NAME);
 
-            _victoryScreen = GetNode<Control>(VICTORY_SCREEN_NAME);
-            _defeatScreen = GetNode<Control>(DEFEAT_SCREEN_NAME);
-
             _workerButton = GetNode<Button>(WORKER_BUTTON_NAME);
-            _restartButton = GetNode<Button>(RESTART_BUTTON_NAME);
 
             _workerProgressBar = GetNode<ProgressBar>(WORKER_PROGRESS_BAR_NAME);
 
             _resourceControl = GetNode<ResourceControl>(RESOURCE_CONTROL_NAME);
             _objectiveControl = GetNode<ObjectiveControl>(OBJECTIVE_CONTROL_NAME);
+            _gameOverControl = GetNode<GameOverControl>(GAME_OVER_CONTROL_NAME);
 
             //Callbacks
             _workerButton.Pressed += OnWorkerButtonPressed;
-            _restartButton.Pressed += OnRestartButtonPressed;
 
-            _objectiveControl.ObjectiveComplete += OnObjectiveComplete;
-            _objectiveControl.ObjectiveFailed += OnObjectiveFailed;
+            _objectiveControl.ObjectiveStateChange += OnObjectiveStateChange;
+            _gameOverControl.Restart += OnRestart;
 
             //Initial Values
             Init();
@@ -87,7 +75,7 @@ namespace starcraftbuildtrainer.scripts
         public override void _Process(double delta)
 		{
             //Early Out if Game Over
-            if (_isGameOver)
+            if (_gameOverControl.IsGameOver)
                 return;
 
             //Update Economy
@@ -123,6 +111,20 @@ namespace starcraftbuildtrainer.scripts
             _objectiveControl.CheckObjectiveComplete(_resourceControl.MineralCount);
         }
 
+        private void Init()
+        {
+            _mineralWorkersCount = INITIAL_WORKERS;
+
+            _workerBuildProgress = 0;
+            _workersInBuildQueue = 0;
+
+            _workerProgressBar.Hide();
+            _workerQueueLabel.Hide();
+
+            _resourceControl.Init();
+            _objectiveControl.Init();
+        }
+
         private void OnWorkerButtonPressed()
         {
             if (_resourceControl.MineralCount >= WORKER_MINERAL_COST && 
@@ -135,39 +137,8 @@ namespace starcraftbuildtrainer.scripts
             }
         }
 
-        private void OnRestartButtonPressed()
-        {
-            Init();
-            _isGameOver = false;
-        }
+        private void OnRestart() => Init();
 
-        private void OnObjectiveComplete() => GameOver(_victoryScreen);
-        private void OnObjectiveFailed() => GameOver(_defeatScreen);
-
-        private void GameOver(Control screen)
-        {
-            screen.Show();
-            _restartButton.Show();
-            _isGameOver = true;
-        }
-
-        private void Init()
-        {
-            _mineralWorkersCount = INITIAL_WORKERS;
-
-            _isGameOver = false;
-
-            _workerBuildProgress = 0;
-            _workersInBuildQueue = 0;
-
-            _victoryScreen.Hide();
-            _defeatScreen.Hide();
-            _restartButton.Hide();
-            _workerProgressBar.Hide();
-            _workerQueueLabel.Hide();
-
-            _resourceControl.Init();
-            _objectiveControl.Init();
-        }
+        private void OnObjectiveStateChange(ObjectiveState state) => _gameOverControl.GameOver(state);
     }
 }

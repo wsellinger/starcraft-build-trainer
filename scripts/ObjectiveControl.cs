@@ -5,8 +5,7 @@ namespace starcraftbuildtrainer.scripts
 {
     public partial class ObjectiveControl : Control
     {
-        [Signal] public delegate void ObjectiveCompleteEventHandler();
-        [Signal] public delegate void ObjectiveFailedEventHandler();
+        [Signal] public delegate void ObjectiveStateChangeEventHandler(ObjectiveState state);
 
         private Label _objectiveLabel;
         private Label _timerLabel;
@@ -37,7 +36,7 @@ namespace starcraftbuildtrainer.scripts
             _timerLabel.Text = TimeSpan.FromSeconds(_timerSeconds).ToString(TIMER_FORMAT);
 
             if (_timerSeconds <= 0)
-                EmitSignal(SignalName.ObjectiveFailed);
+                EmitSignal(SignalName.ObjectiveStateChange, (int)ObjectiveState.Failed);
         }
 
         public void Init()
@@ -51,7 +50,7 @@ namespace starcraftbuildtrainer.scripts
         public void CheckObjectiveComplete(double mineralCount)
         {
             if (mineralCount >= MINERAL_WIN_COUNT)
-                EmitSignal(SignalName.ObjectiveComplete);
+                EmitSignal(SignalName.ObjectiveStateChange, (int)ObjectiveState.Complete);
         }
     }
 }
