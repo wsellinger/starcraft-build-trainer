@@ -6,8 +6,6 @@ namespace starcraftbuildtrainer.scripts
 	{
         //Nodes
 
-        private Label _mineralsLabel;
-        private Label _gasLabel;
         private Label _workersLabel;
         private Label _workerQueueLabel;
 
@@ -17,12 +15,11 @@ namespace starcraftbuildtrainer.scripts
         private Control _victoryScreen;
         private Control _defeatScreen;
 
+        private ResourceControl _resourceControl;
         private ObjectiveControl _objectiveControl;
 
         private ProgressBar _workerProgressBar;
 
-        private const string MINERALS_LABEL_NAME = "MineralsLabel";
-        private const string GAS_LABEL_NAME = "GasLabel";
         private const string WORKERS_LABEL_NAME = "WorkersLabel";
         private const string WORKER_QUEUE_LABEL_NAME = "WorkerQueueLabel";
 
@@ -35,29 +32,25 @@ namespace starcraftbuildtrainer.scripts
         private const string WORKER_PROGRESS_BAR_NAME = "WorkerProgressBar";
 
         private const string OBJECTIVE_CONTROL_NAME = "ObjectiveControl";
+        private const string RESOURCE_CONTROL_NAME = "ResourceControl";
 
         //Data
 
-        private double _mineralCount = 0;
-        private double _gasCount = 0;
-        private int _mineralWorkersCount = 0;
-        private int _gasWorkersCount = 0;
+        private int _mineralWorkersCount;
+        private int _gasWorkersCount;
 
-        private bool _isGameOver = false;
+        private bool _isGameOver;
 
         //Build Worker
 
-        private double _workerBuildProgress = 0;
-        private int _workersInBuildQueue = 0;
+        private double _workerBuildProgress;
+        private int _workersInBuildQueue;
 
         //Constants
 
         private const double WORKER_MINERALS_PER_SECOND = 1.0;
         private const double WORKER_GAS_PER_SECOND = 1.0;
         private const int WORKER_MINERAL_COST = 50;
-
-        private const int INITIAL_MINERALS = 50;
-        private const int INITIAL_GAS = 0;
         private const int INITIAL_WORKERS = 12;
 
         private const int WORKER_BUILD_TIME = 12;
@@ -66,8 +59,6 @@ namespace starcraftbuildtrainer.scripts
         public override void _Ready()
         {
             //Get Nodes
-            _mineralsLabel = GetNode<Label>(MINERALS_LABEL_NAME);
-            _gasLabel = GetNode<Label>(GAS_LABEL_NAME);
             _workersLabel = GetNode<Label>(WORKERS_LABEL_NAME);
             _workerQueueLabel = GetNode<Label>(WORKER_QUEUE_LABEL_NAME);
 
@@ -79,6 +70,7 @@ namespace starcraftbuildtrainer.scripts
 
             _workerProgressBar = GetNode<ProgressBar>(WORKER_PROGRESS_BAR_NAME);
 
+            _resourceControl = GetNode<ResourceControl>(RESOURCE_CONTROL_NAME);
             _objectiveControl = GetNode<ObjectiveControl>(OBJECTIVE_CONTROL_NAME);
 
             //Callbacks
@@ -99,8 +91,8 @@ namespace starcraftbuildtrainer.scripts
                 return;
 
             //Update Economy
-            _mineralCount += _mineralWorkersCount * WORKER_MINERALS_PER_SECOND * delta;
-            _gasCount += _gasWorkersCount * WORKER_GAS_PER_SECOND * delta;
+            _resourceControl.MineralCount += _mineralWorkersCount * WORKER_MINERALS_PER_SECOND * delta;
+            _resourceControl.GasCount += _gasWorkersCount * WORKER_GAS_PER_SECOND * delta;
 
             //Update Production
             if (_workersInBuildQueue > 0)
@@ -122,23 +114,21 @@ namespace starcraftbuildtrainer.scripts
             }
 
             //Update Labels
-            _mineralsLabel.Text = Mathf.Round(_mineralCount).ToString();
-            _gasLabel.Text = Mathf.Round(_gasCount).ToString();
             _workersLabel.Text = _mineralWorkersCount.ToString();
             _workerQueueLabel.Text = _workersInBuildQueue.ToString();
 
             _workerProgressBar.Value = _workerBuildProgress / WORKER_BUILD_TIME;
 
             //Update Objectives
-            _objectiveControl.CheckObjectiveComplete(_mineralCount);
+            _objectiveControl.CheckObjectiveComplete(_resourceControl.MineralCount);
         }
 
         private void OnWorkerButtonPressed()
         {
-            if (_mineralCount >= WORKER_MINERAL_COST && 
+            if (_resourceControl.MineralCount >= WORKER_MINERAL_COST && 
                 _workersInBuildQueue < MAX_UNITS_IN_QUEUE)
             {
-                _mineralCount -= WORKER_MINERAL_COST;
+                _resourceControl.MineralCount -= WORKER_MINERAL_COST;
                 _workersInBuildQueue++;
                 _workerProgressBar.Show();
                 _workerQueueLabel.Show();
@@ -163,8 +153,6 @@ namespace starcraftbuildtrainer.scripts
 
         private void Init()
         {
-            _mineralCount = INITIAL_MINERALS;
-            _gasCount = INITIAL_GAS;
             _mineralWorkersCount = INITIAL_WORKERS;
 
             _isGameOver = false;
@@ -178,6 +166,7 @@ namespace starcraftbuildtrainer.scripts
             _workerProgressBar.Hide();
             _workerQueueLabel.Hide();
 
+            _resourceControl.Init();
             _objectiveControl.Init();
         }
     }

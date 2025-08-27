@@ -1,0 +1,43 @@
+[gd_scene load_steps=3 format=3 uid="uid://dwhswro8m4g78"]
+
+[ext_resource type="Texture2D" uid="uid://davnasmqxfk2i" path="res://assets/art/shared/minerals.png" id="1_05i8v"]
+[ext_resource type="Texture2D" uid="uid://uobgkr3ptg46" path="res://assets/art/shared/gas.png" id="2_68jcg"]
+
+[node name="ResourceControl" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MineralsLabel" type="Label" parent="."]
+layout_mode = 1
+offset_left = 72.0
+offset_top = 8.0
+offset_right = 206.0
+offset_bottom = 53.0
+theme_override_font_sizes/font_size = 32
+text = "100000"
+vertical_alignment = 2
+
+[node name="GasLabel" type="Label" parent="."]
+layout_mode = 1
+offset_left = 264.0
+offset_top = 8.0
+offset_right = 384.0
+offset_bottom = 53.0
+theme_override_font_sizes/font_size = 32
+text = "100000"
+vertical_alignment = 2
+
+[node name="MineralsIcon" type="TextureRect" parent="."]
+layout_mode = 1
+offset_right = 64.0
+offset_bottom = 64.0
+texture = ExtResource("1_05i8v")
+
+[node name="GasIcon" type="TextureRect" parent="."]
+layout_mode = 1
+offset_left = 192.0
+offset_right = 256.0
+offset_bottom = 64.0
+texture = ExtResource("2_68jcg")

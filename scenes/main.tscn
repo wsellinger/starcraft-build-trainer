@@ -1,11 +1,11 @@
 [gd_scene load_steps=8 format=3 uid="uid://bm46ys1npg741"]
 
 [ext_resource type="Script" uid="uid://vw4kgabkijq3" path="res://scripts/Main.cs" id="1_o5qli"]
-[ext_resource type="Texture2D" uid="uid://davnasmqxfk2i" path="res://assets/art/shared/minerals.png" id="2_sugp2"]
-[ext_resource type="Texture2D" uid="uid://uobgkr3ptg46" path="res://assets/art/shared/gas.png" id="3_jyhfs"]
 [ext_resource type="Texture2D" uid="uid://cjb6r1y06efln" path="res://assets/art/terran/buildings/commandCenter.png" id="4_jyhfs"]
 [ext_resource type="Texture2D" uid="uid://cqhxj8cryn0qm" path="res://assets/art/terran/units/scv.png" id="4_tbgi4"]
+[ext_resource type="PackedScene" uid="uid://dwhswro8m4g78" path="res://scenes/resourceControl.tscn" id="5_o6xl0"]
 [ext_resource type="Texture2D" uid="uid://bw4licvck64er" path="res://assets/art/shared/mineralFields.png" id="6_tefeu"]
+[ext_resource type="Script" uid="uid://crnv0ixg5parg" path="res://scripts/ResourceControl.cs" id="6_tipki"]
 [ext_resource type="PackedScene" uid="uid://yjjrd7rhl57a" path="res://scenes/objectiveControl.tscn" id="7_o6xl0"]
 
 [node name="Main" type="CanvasLayer"]
@@ -18,32 +18,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.23, 0.187757, 0.1426, 1)
-
-[node name="MineralsLabel" type="Label" parent="."]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -448.0
-offset_top = 24.0
-offset_right = -314.0
-offset_bottom = 69.0
-grow_horizontal = 0
-theme_override_font_sizes/font_size = 32
-text = "100000"
-vertical_alignment = 2
-
-[node name="GasLabel" type="Label" parent="."]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -256.0
-offset_top = 24.0
-offset_right = -136.0
-offset_bottom = 69.0
-grow_horizontal = 0
-theme_override_font_sizes/font_size = 32
-text = "100000"
-vertical_alignment = 2
 
 [node name="WorkersLabel" type="Label" parent="."]
 anchors_preset = 4
@@ -71,14 +45,6 @@ grow_vertical = 2
 icon = ExtResource("4_jyhfs")
 icon_alignment = 1
 
-[node name="MineralsIcon" type="Sprite2D" parent="."]
-position = Vector2(800, 39)
-texture = ExtResource("2_sugp2")
-
-[node name="GasIcon" type="Sprite2D" parent="."]
-position = Vector2(992, 39)
-texture = ExtResource("3_jyhfs")
-
 [node name="WorkerIcon" type="Sprite2D" parent="."]
 position = Vector2(208, 227)
 texture = ExtResource("4_tbgi4")
@@ -88,9 +54,18 @@ position = Vector2(106.073, 224.006)
 scale = Vector2(0.261276, 0.261276)
 texture = ExtResource("6_tefeu")
 
+[node name="ResourceControl" parent="." instance=ExtResource("5_o6xl0")]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -480.0
+offset_top = 7.0
+offset_right = -96.0
+offset_bottom = 71.0
+grow_horizontal = 0
+script = ExtResource("6_tipki")
+
 [node name="ObjectiveControl" parent="." instance=ExtResource("7_o6xl0")]
-offset_right = 528.0
-offset_bottom = 176.0
 
 [node name="VictoryScreen" type="Control" parent="."]
 visible = false
