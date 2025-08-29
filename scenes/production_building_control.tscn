@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=3 uid="uid://e83mekldt0ti"]
+
+[ext_resource type="Texture2D" uid="uid://cjb6r1y06efln" path="res://assets/art/terran/buildings/commandCenter.png" id="1_e2ta1"]
+[ext_resource type="Script" uid="uid://bakggln6thg3w" path="res://scripts/ProductionBuildingControl.cs" id="1_qhnah"]
+
+[node name="ProductionBuildingControl" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 88.0
+offset_bottom = 104.0
+script = ExtResource("1_qhnah")
+
+[node name="SelectionButton" type="Button" parent="."]
+layout_mode = 1
+offset_right = 84.0
+offset_bottom = 84.0
+icon = ExtResource("1_e2ta1")
+icon_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+layout_mode = 1
+offset_left = 10.0
+offset_top = 93.0
+offset_right = 165.0
+offset_bottom = 120.0
+scale = Vector2(0.465, 0.465)
+max_value = 1.0
+
+[node name="QueueLabel" type="Label" parent="."]
+layout_mode = 1
+offset_left = 1.0
+offset_top = 93.0
+offset_right = 16.0
+offset_bottom = 116.0
+scale = Vector2(0.525, 0.525)
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
