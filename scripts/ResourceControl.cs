@@ -2,10 +2,11 @@ using Godot;
 
 namespace starcraftbuildtrainer.scripts
 {
-    public partial class ResourceControl : Control
+
+    public partial class ResourceControl : Control, IPaymentProcessor
     {
-        public double MineralCount { get; set; }
-        public double GasCount { get; set; }
+        public double Minerals { get => _resources.Minerals; }
+        public double Gas { get => _resources.Gas; }
 
         //Nodes
 
@@ -14,6 +15,10 @@ namespace starcraftbuildtrainer.scripts
 
         private const string MINERALS_LABEL_NAME = "MineralsLabel";
         private const string GAS_LABEL_NAME = "GasLabel";
+
+        //Data
+
+        private Resources _resources;
 
         //Defaults
 
@@ -28,14 +33,58 @@ namespace starcraftbuildtrainer.scripts
 
         public override void _Process(double delta)
         {
-            _mineralsLabel.Text = Mathf.Round(MineralCount).ToString();
-            _gasLabel.Text = Mathf.Round(GasCount).ToString();
+            _mineralsLabel.Text = Mathf.Round(_resources.Minerals).ToString();
+            _gasLabel.Text = Mathf.Round(_resources.Gas).ToString();
         }
 
         public void Init()
         {
-            MineralCount = INITIAL_MINERALS;
-            GasCount = INITIAL_GAS;
+            _resources.Minerals = INITIAL_MINERALS;
+            _resources.Gas = INITIAL_GAS;
+        }
+
+        public void AddMinerals(double value) => _resources.Minerals += value;
+        public void AddGas(double value) => _resources.Gas += value;
+
+        public bool MakePayment(ResourceCost cost)
+        {
+            bool result = true;
+
+            if (cost.Minerals > _resources.Minerals)
+            {
+                //TODO display error
+                result = false;
+            }
+
+            if (cost.Gas > _resources.Gas)
+            {
+                //TODO display error
+                result = false;
+            }
+
+            //TODO add supply check
+
+            if (result is true)
+            {
+                _resources -= cost;
+            }
+
+            return result;
+        }
+
+        private struct Resources(uint minerals, uint gas)
+        {
+            public double Minerals { get; set; } = minerals;
+            public double Gas { get; set; } = gas;
+
+            public static implicit operator Resources(ResourceCost cost) => new(cost.Minerals, cost.Gas);
+
+            public static Resources operator -(Resources minuend, Resources subtrahend)
+            {
+                minuend.Minerals -= subtrahend.Minerals;
+                minuend.Gas -= subtrahend.Gas;
+                return minuend;
+            }
         }
     }
 }

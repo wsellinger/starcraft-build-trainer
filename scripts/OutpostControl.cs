@@ -1,10 +1,10 @@
 using Godot;
+using System.Diagnostics;
 
 namespace starcraftbuildtrainer.scripts
 {
     public partial class OutpostControl : Control
     {
-        [Signal] public delegate void WorkerBuildRequestEventHandler();
         [Signal] public delegate void MineralsMinedEventHandler(double value);
         [Signal] public delegate void GasMinedEventHandler(double value);
 
@@ -12,13 +12,17 @@ namespace starcraftbuildtrainer.scripts
 
         private Label _workersLabel;
         private Label _workerQueueLabel;
-        private Button _townhallButton;
+        private Button _townhallButton; //TODO move townhall logic into new Building scene
         private ProgressBar _workerProgressBar;
 
         private const string WORKERS_LABEL_NAME = "WorkersLabel";
         private const string WORKER_QUEUE_LABEL_NAME = "WorkerQueueLabel";
         private const string TOWNHALL_BUTTON_NAME = "TownhallButton";
         private const string WORKER_PROGRESS_BAR_NAME = "WorkerProgressBar";
+
+        //References
+
+        public IPaymentProcessor PaymentProcessor { private get; set; }
 
         //Data
 
@@ -34,11 +38,12 @@ namespace starcraftbuildtrainer.scripts
 
         private const double WORKER_MINERALS_PER_SECOND = 1.0;
         private const double WORKER_GAS_PER_SECOND = 1.0;
-        private const int WORKER_MINERAL_COST = 50;
         private const int INITIAL_WORKERS = 12;
 
         private const int WORKER_BUILD_TIME = 12;
         private const int MAX_UNITS_IN_QUEUE = 5;
+
+        private readonly ResourceCost _workerResourceCost = new(50, 0);
 
         public override void _Ready()
         {
@@ -88,6 +93,8 @@ namespace starcraftbuildtrainer.scripts
 
         public void Init()
         {
+            Assert.That(PaymentProcessor is not null, "Payment Processor Uninitialized");
+
             _mineralWorkersCount = INITIAL_WORKERS;
 
             _workerBuildProgress = 0;
@@ -97,29 +104,19 @@ namespace starcraftbuildtrainer.scripts
             _workerQueueLabel.Hide();
         }
 
-        public int BuildWorker(double totalMinerals)
+        private void OnWorkerButtonPressed()
         {
-            if (totalMinerals >= WORKER_MINERAL_COST)
+            if (_workersInBuildQueue >= MAX_UNITS_IN_QUEUE)
+            {
+                //TODO Display Error
+                return;
+            }
+
+            if (PaymentProcessor.MakePayment(_workerResourceCost))
             {
                 _workersInBuildQueue++;
                 _workerProgressBar.Show();
                 _workerQueueLabel.Show();
-
-                return WORKER_MINERAL_COST;
-            }
-
-            return 0;
-        }
-
-        private void OnWorkerButtonPressed()
-        {
-            if (_workersInBuildQueue < MAX_UNITS_IN_QUEUE)
-            {
-                EmitSignal(SignalName.WorkerBuildRequest);
-            }
-            else
-            {
-                //TODO Display Error
             }
         }
     }

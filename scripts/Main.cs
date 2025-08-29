@@ -19,21 +19,19 @@ namespace starcraftbuildtrainer.scripts
         public override void _Ready()
         {
             //Nodes
-
             _outpostControl = GetNode<OutpostControl>(OUTPOST_CONTROL_NAME);
             _resourceControl = GetNode<ResourceControl>(RESOURCE_CONTROL_NAME);
             _objectiveControl = GetNode<ObjectiveControl>(OBJECTIVE_CONTROL_NAME);
             _gameOverControl = GetNode<GameOverControl>(GAME_OVER_CONTROL_NAME);
 
             //Callbacks
-
-            _outpostControl.WorkerBuildRequest += OnWorkerBuildRequest;
             _outpostControl.MineralsMined += OnMineralsMined;
             _outpostControl.GasMined += OnGasMined;
             _objectiveControl.ObjectiveStateChange += OnObjectiveStateChange;
             _gameOverControl.Restart += OnRestart;
 
             //Initial Values
+            _outpostControl.PaymentProcessor = _resourceControl;
 
             Init();
         }
@@ -45,7 +43,7 @@ namespace starcraftbuildtrainer.scripts
                 return;
 
             //Update Objectives
-            _objectiveControl.CheckObjectiveComplete(_resourceControl.MineralCount);
+            _objectiveControl.CheckObjectiveComplete(_resourceControl.Minerals);
         }
 
         private void Init()
@@ -58,11 +56,8 @@ namespace starcraftbuildtrainer.scripts
 
         //Outpost Callbacks
 
-        private void OnWorkerBuildRequest() => _resourceControl.MineralCount -= _outpostControl.BuildWorker(_resourceControl.MineralCount);
-
-        private void OnMineralsMined(double value) => _resourceControl.MineralCount += value;
-
-        private void OnGasMined(double value) => _resourceControl.GasCount += value;
+        private void OnMineralsMined(double value) => _resourceControl.AddMinerals(value);
+        private void OnGasMined(double value) => _resourceControl.AddGas(value);
 
         //Objective Callbacks
 
