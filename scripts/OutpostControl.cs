@@ -15,16 +15,24 @@ namespace starcraftbuildtrainer.scripts
 
         //Nodes
 
-        private Label _workersLabel;
         private ProductionBuildingControl _townhallControl;
+        private ResourceNodeControl _idleControl;
+        private ResourceNodeControl _mineralsControl;
+        private ResourceNodeControl _gasControlA;
+        private ResourceNodeControl _gasControlB;
 
-        private const string WORKERS_LABEL_NAME = "WorkersLabel";
         private const string TOWNHALL_CONTROL_NAME = "TownHallControl";
+        private const string IDLE_CONTROL_NAME = "IdleControl";
+        private const string MINERALS_CONTROL_NAME = "MineralsControl";
+        private const string GAS_CONTROL_A_NAME = "GasControl_A";
+        private const string GAS_CONTROL_B_NAME = "GasControl_B";
 
         //Data
 
+        private int _idleWorkersCount;
         private int _mineralWorkersCount;
-        private int _gasWorkersCount;
+        private int _gasWorkersCount_A;
+        private int _gasWorkersCount_B;
 
         //Const
 
@@ -34,8 +42,11 @@ namespace starcraftbuildtrainer.scripts
 
         public override void _Ready()
         {
-            _workersLabel = GetNode<Label>(WORKERS_LABEL_NAME);
             _townhallControl = GetNode<ProductionBuildingControl>(TOWNHALL_CONTROL_NAME);
+            _idleControl = GetNode<ResourceNodeControl>(IDLE_CONTROL_NAME);
+            _mineralsControl = GetNode<ResourceNodeControl>(MINERALS_CONTROL_NAME);
+            _gasControlA = GetNode<ResourceNodeControl>(GAS_CONTROL_A_NAME);
+            _gasControlB = GetNode<ResourceNodeControl>(GAS_CONTROL_B_NAME);
 
             //Callbacks
             _townhallControl.UnitProduced += OnWorkerProduced;
@@ -47,11 +58,14 @@ namespace starcraftbuildtrainer.scripts
             if (_mineralWorkersCount > 0)
                 EmitSignal(SignalName.MineralsMined, _mineralWorkersCount * WORKER_MINERALS_PER_SECOND * delta);
 
-            if (_gasWorkersCount > 0)
-                EmitSignal(SignalName.GasMined, _gasWorkersCount * WORKER_GAS_PER_SECOND * delta);
+            if (_gasWorkersCount_A > 0)
+                EmitSignal(SignalName.GasMined, _gasWorkersCount_A * WORKER_GAS_PER_SECOND * delta);
 
             //Update Labels
-            _workersLabel.Text = _mineralWorkersCount.ToString();
+            _idleControl.Text = _idleWorkersCount.ToString();
+            _mineralsControl.Text = _mineralWorkersCount.ToString();
+            _gasControlA.Text = _gasWorkersCount_A.ToString();
+            _gasControlB.Text = _gasWorkersCount_B.ToString();
         }
 
         public void Init()

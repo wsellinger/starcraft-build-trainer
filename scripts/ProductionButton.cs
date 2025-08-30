@@ -9,10 +9,10 @@ namespace starcraftbuildtrainer.scripts
         public override void _Ready()
         {
             Assert.That(TexturePath is not null and not "");
+
             GetNode<BoxContainer>(nameof(BoxContainer)).
                 GetNode<TextureRect>(nameof(TextureRect)).
                     Texture = GD.Load<Texture2D>(TexturePath);
         }
-
     }
 }
