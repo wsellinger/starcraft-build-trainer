@@ -39,5 +39,5 @@ texture = ExtResource("3_xywv2")
 [node name="TownHallControl" parent="." instance=ExtResource("4_5e1d3")]
 offset_left = 344.0
 offset_top = 80.0
-offset_right = 432.0
-offset_bottom = 184.0
+offset_right = 496.0
+offset_bottom = 256.0
