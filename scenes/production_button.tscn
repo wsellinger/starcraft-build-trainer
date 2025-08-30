@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://dyxjwpruku2ra"]
+
+[ext_resource type="Script" uid="uid://pd5qjcw4ei18" path="res://scripts/ProductionButton.cs" id="1_33ofj"]
+
+[node name="ProductionButton" type="Button"]
+offset_right = 8.0
+offset_bottom = 8.0
+script = ExtResource("1_33ofj")
+
+[node name="BoxContainer" type="BoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="BoxContainer"]
+layout_mode = 2
+expand_mode = 3

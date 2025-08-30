@@ -34,19 +34,37 @@ namespace starcraftbuildtrainer.scripts
         private const int MAX_UNITS_IN_QUEUE = 5;
         private readonly ResourceCost _workerResourceCost = new(50, 0);
 
+        private const float PRODUCTION_BUTTON_X_BUFFER = 10;
+        private const string UNIT_TEXTURE_PATH = "res://assets/art/terran/units/scv.png";
+
         public override void _Ready()
         {
             //Nodes
             _queueLabel = GetNode<Label>(QUEUE_LABEL_NAME);
             _selectionButton = GetNode<Button>(SELECTION_BUTTON_NAME);
             _progressBar = GetNode<ProgressBar>(PROGRESS_BAR_NAME);
-            
-            _productionButton = new ProductionButton(_selectionButton);
-            AddChild(_productionButton);
+
+            _productionButton = CreateProductionButton(_selectionButton);
 
             //Callbacks
             _selectionButton.Pressed += OnSelectionButtonPressed;
             _productionButton.Pressed += OnProductionButtonPressed;
+
+            ProductionButton CreateProductionButton(Control parent)
+            {
+                float x = parent.Position.X + parent.Size.X + PRODUCTION_BUTTON_X_BUFFER;
+                float size = parent.Size.Y / 3;
+
+                var scene = GD.Load<PackedScene>("res://scenes/production_button.tscn");
+                var button = scene.Instantiate<ProductionButton>();
+                button.TexturePath = UNIT_TEXTURE_PATH;
+                button.Position = new Vector2(x, parent.Position.Y);
+                button.Size = new Vector2(size, size);
+                button.Visible = false;
+                AddChild(button);
+
+                return button;
+            }
         }
 
         public override void _Process(double delta)
