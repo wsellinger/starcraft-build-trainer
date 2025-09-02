@@ -31,13 +31,6 @@ namespace starcraftbuildtrainer.scripts
         private const string MINERAL_TEXTURE_PATH = "res://assets/art/shared/mineralFields.png";
         private const string GAS_TEXTURE_PATH = "res://assets/art/shared/vespeneGeyser.png";
 
-        //Data
-
-        private int _idleWorkersCount;
-        private int _mineralWorkersCount;
-        private int _gasWorkersCount_A;
-        private int _gasWorkersCount_B;
-
         //Const
 
         private const double WORKER_MINERALS_PER_SECOND = 1.0;
@@ -63,25 +56,23 @@ namespace starcraftbuildtrainer.scripts
 
         public override void _Process(double delta)
         {
+            //TODO move econ updates to signals emitted from workerActivityControls once we move to individual workers
             //Update Economy
-            if (_mineralWorkersCount > 0)
-                EmitSignal(SignalName.MineralsMined, _mineralWorkersCount * WORKER_MINERALS_PER_SECOND * delta);
+            if (_mineralsControl.WorkerCount > 0)
+                EmitSignal(SignalName.MineralsMined, _mineralsControl.WorkerCount * WORKER_MINERALS_PER_SECOND * delta);
 
-            if (_gasWorkersCount_A > 0)
-                EmitSignal(SignalName.GasMined, _gasWorkersCount_A * WORKER_GAS_PER_SECOND * delta);
+            if (_gasControlA.WorkerCount > 0)
+                EmitSignal(SignalName.GasMined, _gasControlA.WorkerCount * WORKER_GAS_PER_SECOND * delta);
 
-            //Update Labels
-            _constructionControl.Text = _idleWorkersCount.ToString();
-            _mineralsControl.Text = _mineralWorkersCount.ToString();
-            _gasControlA.Text = _gasWorkersCount_A.ToString();
-            _gasControlB.Text = _gasWorkersCount_B.ToString();
+            if (_gasControlB.WorkerCount > 0)
+                EmitSignal(SignalName.GasMined, _gasControlA.WorkerCount * WORKER_GAS_PER_SECOND * delta);
         }
 
         public void Init()
         {
             Assert.That(PaymentProcessor is not null, "Payment Processor Uninitialized");
 
-            _mineralWorkersCount = INITIAL_WORKERS;
+            _mineralsControl.WorkerCount = INITIAL_WORKERS;
 
             _townhallControl.PaymentProcessor = PaymentProcessor;
             _townhallControl.Init();
@@ -89,7 +80,7 @@ namespace starcraftbuildtrainer.scripts
 
         private void OnWorkerProduced()
         {
-            _mineralWorkersCount++;
+            _mineralsControl.WorkerCount++;
         }
     }
 }

@@ -4,7 +4,23 @@ namespace starcraftbuildtrainer.scripts
 {
     public partial class WorkerActivityControl : Control
     {
-        public string Text { get => _workerCountLabel.Text; set => _workerCountLabel.Text = value; }
+        //Signals
+
+        [Signal] public delegate void ActivityCompleteEventHandler(double value);
+
+        //Properties
+
+        public int WorkerCount
+        {
+            get { return _workerCount; }
+            set
+            {
+                _workerCount = value;
+                _workerCountLabel.Text = _workerCount.ToString();
+            }
+        }
+
+        //Nodes
 
         private TextureRect _activityTextureRect;
         private Label _workerCountLabel;
@@ -14,7 +30,10 @@ namespace starcraftbuildtrainer.scripts
         private const string WORKER_COUNT_LABEL_BOX_NAME = "WorkerCountLabelBox";
         private const string WORKER_COUNT_LABEL_NAME = "WorkerCountLabel";
         
-        //TODO move worker counts into here
+        //Data
+
+        private int _workerCount;
+
         //TODO implement construction buttons
         //TODO implement construction of supply depot
         //TODO implement supply
@@ -29,6 +48,7 @@ namespace starcraftbuildtrainer.scripts
 
         public override void _Process(double delta)
         {
+            
         }
 
         public void LoadActivityTexture(string path) => _activityTextureRect.Texture = GD.Load<Texture2D>(path);
