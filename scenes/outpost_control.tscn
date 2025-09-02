@@ -1,11 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://br0afaoskdis6"]
+[gd_scene load_steps=4 format=3 uid="uid://br0afaoskdis6"]
 
 [ext_resource type="Script" uid="uid://bfw40mdu6dl8v" path="res://scripts/OutpostControl.cs" id="1_5e1d3"]
-[ext_resource type="Texture2D" uid="uid://cqhxj8cryn0qm" path="res://assets/art/terran/units/scv.png" id="2_5e1d3"]
-[ext_resource type="Texture2D" uid="uid://bw4licvck64er" path="res://assets/art/shared/mineralFields.png" id="3_xywv2"]
+[ext_resource type="PackedScene" uid="uid://ck0ovmif5ly1g" path="res://scenes/worker_activity_control.tscn" id="3_5e1d3"]
 [ext_resource type="PackedScene" uid="uid://e83mekldt0ti" path="res://scenes/production_building_control.tscn" id="4_5e1d3"]
-[ext_resource type="Script" uid="uid://bqp2q0l8h1ut1" path="res://scripts/ResourceNodeControl.cs" id="5_pvfqc"]
-[ext_resource type="Texture2D" uid="uid://byh07n532fhwg" path="res://assets/art/shared/vespeneGeyser.png" id="5_xywv2"]
 
 [node name="OutpostControl" type="Control"]
 layout_mode = 3
@@ -20,228 +17,16 @@ offset_left = 256.0
 offset_right = 408.0
 offset_bottom = 176.0
 
-[node name="IdleControl" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_top = -18.0
-offset_right = 216.0
-offset_bottom = 46.0
-scale = Vector2(0.7145, 0.7145)
-script = ExtResource("5_pvfqc")
-metadata/_edit_group_ = true
+[node name="ConstructionControl" parent="." instance=ExtResource("3_5e1d3")]
 
-[node name="WorkerLabelBox" type="BoxContainer" parent="IdleControl"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.407407
-anchor_top = 0.375
-anchor_right = 0.523148
-anchor_bottom = 0.859375
-metadata/_edit_group_ = true
-metadata/_edit_use_anchors_ = true
+[node name="MineralsControl" parent="." instance=ExtResource("3_5e1d3")]
+offset_top = 40.0
+offset_bottom = 104.0
 
-[node name="WorkersLabel" type="Label" parent="IdleControl/WorkerLabelBox"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 22
-text = "00"
-vertical_alignment = 2
-metadata/_edit_use_anchors_ = true
+[node name="GasControl_A" parent="." instance=ExtResource("3_5e1d3")]
+offset_top = 80.0
+offset_bottom = 144.0
 
-[node name="WorkerBox" type="BoxContainer" parent="IdleControl"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.62963
-anchor_top = 0.375
-anchor_right = 0.828704
-anchor_bottom = 1.0
-metadata/_edit_group_ = true
-metadata/_edit_use_anchors_ = true
-
-[node name="WorkerIcon" type="TextureRect" parent="IdleControl/WorkerBox"]
-layout_mode = 2
-texture = ExtResource("2_5e1d3")
-expand_mode = 3
-metadata/_edit_use_anchors_ = true
-
-[node name="GasGeyserBox" type="BoxContainer" parent="IdleControl"]
-visible = false
-layout_mode = 2
-anchor_top = 0.125
-anchor_right = 0.319444
-anchor_bottom = 1.0
-metadata/_edit_use_anchors_ = true
-metadata/_edit_group_ = true
-
-[node name="GasGeyserTexture" type="TextureRect" parent="IdleControl/GasGeyserBox"]
-layout_mode = 2
-texture = ExtResource("5_xywv2")
-expand_mode = 3
-
-[node name="MineralsControl" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_top = 22.0
-offset_right = 216.0
-offset_bottom = 86.0
-scale = Vector2(0.7145, 0.7145)
-script = ExtResource("5_pvfqc")
-metadata/_edit_group_ = true
-
-[node name="WorkerLabelBox" type="BoxContainer" parent="MineralsControl"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.407407
-anchor_top = 0.375
-anchor_right = 0.523148
-anchor_bottom = 0.859375
-metadata/_edit_group_ = true
-metadata/_edit_use_anchors_ = true
-
-[node name="WorkersLabel" type="Label" parent="MineralsControl/WorkerLabelBox"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 22
-text = "00"
-vertical_alignment = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="WorkerBox" type="BoxContainer" parent="MineralsControl"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.62963
-anchor_top = 0.375
-anchor_right = 0.828704
-anchor_bottom = 1.0
-metadata/_edit_group_ = true
-metadata/_edit_use_anchors_ = true
-
-[node name="WorkerIcon" type="TextureRect" parent="MineralsControl/WorkerBox"]
-layout_mode = 2
-texture = ExtResource("2_5e1d3")
-expand_mode = 3
-metadata/_edit_use_anchors_ = true
-
-[node name="MineralsBox" type="BoxContainer" parent="MineralsControl"]
-layout_mode = 2
-anchor_top = 0.25
-anchor_right = 0.305556
-anchor_bottom = 1.0
-metadata/_edit_use_anchors_ = true
-metadata/_edit_group_ = true
-
-[node name="MineralsTexture" type="TextureRect" parent="MineralsControl/MineralsBox"]
-layout_mode = 2
-texture = ExtResource("3_xywv2")
-expand_mode = 3
-
-[node name="GasControl_A" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_top = 65.0
-offset_right = 216.0
-offset_bottom = 129.0
-scale = Vector2(0.7145, 0.7145)
-script = ExtResource("5_pvfqc")
-metadata/_edit_group_ = true
-
-[node name="WorkerLabelBox" type="BoxContainer" parent="GasControl_A"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.407407
-anchor_top = 0.375
-anchor_right = 0.523148
-anchor_bottom = 0.859375
-metadata/_edit_group_ = true
-metadata/_edit_use_anchors_ = true
-
-[node name="WorkersLabel" type="Label" parent="GasControl_A/WorkerLabelBox"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 22
-text = "00"
-vertical_alignment = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="WorkerBox" type="BoxContainer" parent="GasControl_A"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.62963
-anchor_top = 0.375
-anchor_right = 0.829259
-anchor_bottom = 1.0
-offset_right = -0.119995
-metadata/_edit_group_ = true
-metadata/_edit_use_anchors_ = true
-
-[node name="WorkerIcon" type="TextureRect" parent="GasControl_A/WorkerBox"]
-layout_mode = 2
-texture = ExtResource("2_5e1d3")
-expand_mode = 3
-metadata/_edit_use_anchors_ = true
-
-[node name="GasGeyserBox" type="BoxContainer" parent="GasControl_A"]
-layout_mode = 2
-anchor_top = 0.125
-anchor_right = 0.325
-anchor_bottom = 1.0
-metadata/_edit_use_anchors_ = true
-metadata/_edit_group_ = true
-
-[node name="GasGeyserTexture" type="TextureRect" parent="GasControl_A/GasGeyserBox"]
-layout_mode = 2
-texture = ExtResource("5_xywv2")
-expand_mode = 3
-
-[node name="GasControl_B" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_top = 106.0
-offset_right = 216.0
-offset_bottom = 170.0
-scale = Vector2(0.7145, 0.7145)
-script = ExtResource("5_pvfqc")
-metadata/_edit_group_ = true
-
-[node name="WorkerLabelBox" type="BoxContainer" parent="GasControl_B"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.407407
-anchor_top = 0.375
-anchor_right = 0.523148
-anchor_bottom = 0.859375
-metadata/_edit_group_ = true
-metadata/_edit_use_anchors_ = true
-
-[node name="WorkersLabel" type="Label" parent="GasControl_B/WorkerLabelBox"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 22
-text = "00"
-vertical_alignment = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="WorkerBox" type="BoxContainer" parent="GasControl_B"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.62963
-anchor_top = 0.375
-anchor_right = 0.828704
-anchor_bottom = 1.0
-metadata/_edit_group_ = true
-metadata/_edit_use_anchors_ = true
-
-[node name="WorkerIcon" type="TextureRect" parent="GasControl_B/WorkerBox"]
-layout_mode = 2
-texture = ExtResource("2_5e1d3")
-expand_mode = 3
-metadata/_edit_use_anchors_ = true
-
-[node name="GasGeyserBox" type="BoxContainer" parent="GasControl_B"]
-layout_mode = 2
-anchor_top = 0.125
-anchor_right = 0.319444
-anchor_bottom = 1.0
-metadata/_edit_use_anchors_ = true
-metadata/_edit_group_ = true
-
-[node name="GasGeyserTexture" type="TextureRect" parent="GasControl_B/GasGeyserBox"]
-layout_mode = 2
-texture = ExtResource("5_xywv2")
-expand_mode = 3
+[node name="GasControl_B" parent="." instance=ExtResource("3_5e1d3")]
+offset_top = 120.0
+offset_bottom = 184.0

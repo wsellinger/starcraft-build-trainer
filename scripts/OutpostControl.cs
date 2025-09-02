@@ -16,16 +16,20 @@ namespace starcraftbuildtrainer.scripts
         //Nodes
 
         private ProductionBuildingControl _townhallControl;
-        private ResourceNodeControl _idleControl;
-        private ResourceNodeControl _mineralsControl;
-        private ResourceNodeControl _gasControlA;
-        private ResourceNodeControl _gasControlB;
+        private WorkerActivityControl _constructionControl;
+        private WorkerActivityControl _mineralsControl;
+        private WorkerActivityControl _gasControlA;
+        private WorkerActivityControl _gasControlB;
 
         private const string TOWNHALL_CONTROL_NAME = "TownHallControl";
-        private const string IDLE_CONTROL_NAME = "IdleControl";
+        private const string IDLE_CONTROL_NAME = "ConstructionControl";
         private const string MINERALS_CONTROL_NAME = "MineralsControl";
         private const string GAS_CONTROL_A_NAME = "GasControl_A";
         private const string GAS_CONTROL_B_NAME = "GasControl_B";
+
+        private const string CONSTRUCTION_TEXTURE_PATH = "res://assets/art/terran/workerBuildingIcon.png";
+        private const string MINERAL_TEXTURE_PATH = "res://assets/art/shared/mineralFields.png";
+        private const string GAS_TEXTURE_PATH = "res://assets/art/shared/vespeneGeyser.png";
 
         //Data
 
@@ -43,10 +47,15 @@ namespace starcraftbuildtrainer.scripts
         public override void _Ready()
         {
             _townhallControl = GetNode<ProductionBuildingControl>(TOWNHALL_CONTROL_NAME);
-            _idleControl = GetNode<ResourceNodeControl>(IDLE_CONTROL_NAME);
-            _mineralsControl = GetNode<ResourceNodeControl>(MINERALS_CONTROL_NAME);
-            _gasControlA = GetNode<ResourceNodeControl>(GAS_CONTROL_A_NAME);
-            _gasControlB = GetNode<ResourceNodeControl>(GAS_CONTROL_B_NAME);
+            _constructionControl = GetNode<WorkerActivityControl>(IDLE_CONTROL_NAME);
+            _mineralsControl = GetNode<WorkerActivityControl>(MINERALS_CONTROL_NAME);
+            _gasControlA = GetNode<WorkerActivityControl>(GAS_CONTROL_A_NAME);
+            _gasControlB = GetNode<WorkerActivityControl>(GAS_CONTROL_B_NAME);
+
+            _constructionControl.LoadActivityTexture(CONSTRUCTION_TEXTURE_PATH);
+            _mineralsControl.LoadActivityTexture(MINERAL_TEXTURE_PATH);
+            _gasControlA.LoadActivityTexture(GAS_TEXTURE_PATH);
+            _gasControlB.LoadActivityTexture(GAS_TEXTURE_PATH);
 
             //Callbacks
             _townhallControl.UnitProduced += OnWorkerProduced;
@@ -62,7 +71,7 @@ namespace starcraftbuildtrainer.scripts
                 EmitSignal(SignalName.GasMined, _gasWorkersCount_A * WORKER_GAS_PER_SECOND * delta);
 
             //Update Labels
-            _idleControl.Text = _idleWorkersCount.ToString();
+            _constructionControl.Text = _idleWorkersCount.ToString();
             _mineralsControl.Text = _mineralWorkersCount.ToString();
             _gasControlA.Text = _gasWorkersCount_A.ToString();
             _gasControlB.Text = _gasWorkersCount_B.ToString();
