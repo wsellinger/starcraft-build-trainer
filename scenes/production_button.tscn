@@ -3,9 +3,11 @@
 [ext_resource type="Script" uid="uid://pd5qjcw4ei18" path="res://scripts/ProductionButton.cs" id="1_33ofj"]
 
 [node name="ProductionButton" type="Button"]
-offset_right = 8.0
-offset_bottom = 8.0
+anchors_preset = -1
+anchor_right = 0.0125
+anchor_bottom = 0.0222222
 script = ExtResource("1_33ofj")
+metadata/_edit_use_anchors_ = true
 
 [node name="BoxContainer" type="BoxContainer" parent="."]
 layout_mode = 1
@@ -14,6 +16,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="BoxContainer"]
 layout_mode = 2

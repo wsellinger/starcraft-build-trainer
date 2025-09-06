@@ -20,6 +20,7 @@ namespace starcraftbuildtrainer.scripts
         private WorkerActivityControl _mineralsControl;
         private WorkerActivityControl _gasControlA;
         private WorkerActivityControl _gasControlB;
+        private WorkerActivityControl[] _menuControls;
 
         private const string TOWNHALL_CONTROL_NAME = "TownHallControl";
         private const string IDLE_CONTROL_NAME = "ConstructionControl";
@@ -27,7 +28,7 @@ namespace starcraftbuildtrainer.scripts
         private const string GAS_CONTROL_A_NAME = "GasControl_A";
         private const string GAS_CONTROL_B_NAME = "GasControl_B";
 
-        private const string CONSTRUCTION_TEXTURE_PATH = "res://assets/art/terran/workerBuildingIcon.png";
+        private const string CONSTRUCTION_TEXTURE_PATH = "res://assets/art/terran/menu/workerBuildingIcon.png";
         private const string MINERAL_TEXTURE_PATH = "res://assets/art/shared/mineralFields.png";
         private const string GAS_TEXTURE_PATH = "res://assets/art/shared/vespeneGeyser.png";
 
@@ -45,6 +46,10 @@ namespace starcraftbuildtrainer.scripts
             _gasControlA = GetNode<WorkerActivityControl>(GAS_CONTROL_A_NAME);
             _gasControlB = GetNode<WorkerActivityControl>(GAS_CONTROL_B_NAME);
 
+            _menuControls = [_constructionControl, _mineralsControl, _gasControlA, _gasControlB];
+
+             //TODO implement same for townhall control
+
             _constructionControl.LoadActivityTexture(CONSTRUCTION_TEXTURE_PATH);
             _mineralsControl.LoadActivityTexture(MINERAL_TEXTURE_PATH);
             _gasControlA.LoadActivityTexture(GAS_TEXTURE_PATH);
@@ -52,6 +57,9 @@ namespace starcraftbuildtrainer.scripts
 
             //Callbacks
             _townhallControl.UnitProduced += OnWorkerProduced;
+
+            foreach (var menuControl in _menuControls)
+                menuControl.MenuOpened += OnControlMenuOpened;
         }
 
         public override void _Process(double delta)
@@ -81,6 +89,21 @@ namespace starcraftbuildtrainer.scripts
         private void OnWorkerProduced()
         {
             _mineralsControl.WorkerCount++;
+        }
+
+        private void OnControlMenuOpened(WorkerActivityControl control)
+        {
+            foreach (var menuControl in _menuControls)
+            {
+                if (menuControl == control)
+                {
+                    menuControl.MoveToFront();
+                }
+                else
+                {
+                    menuControl.CloseMenu();
+                }
+            }
         }
     }
 }
