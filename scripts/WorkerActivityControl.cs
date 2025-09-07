@@ -43,6 +43,7 @@ namespace starcraftbuildtrainer.scripts
         //Data
 
         private int _workerCount;
+        private bool _isMenuOpen;
 
         //TODO implement construction buttons
         //TODO implement construction of supply depot
@@ -65,24 +66,27 @@ namespace starcraftbuildtrainer.scripts
 
         }
 
-        public override void _Process(double delta)
-        {
-            
-        }
-
         public void LoadActivityTexture(string path) => _activityTextureRect.Texture = GD.Load<Texture2D>(path);
 
-        public void CloseMenu() => _workerCommandCard.Visible = false;
+        public void OpenMenu()
+        {
+            _isMenuOpen = true;
+            _workerCommandCard.Visible = true;
+            EmitSignal(SignalName.MenuOpened, this);
+        }
+
+        public void CloseMenu()
+        {
+            _isMenuOpen = false;
+            _workerCommandCard.Visible = false;
+        }
 
         private void OnWorkerButtonPressed()
         {
-            bool isVisible = !_workerCommandCard.Visible;
-            _workerCommandCard.Visible = isVisible;
-
-            if (isVisible)
-            {
-                EmitSignal(SignalName.MenuOpened, this);
-            }
+            if (!_isMenuOpen)
+                OpenMenu();
+            else
+                CloseMenu();
         }
     }
 }

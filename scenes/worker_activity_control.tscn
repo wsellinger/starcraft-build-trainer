@@ -83,22 +83,14 @@ offset_bottom = 91.0
 custom_minimum_size = Vector2(43, 40)
 layout_mode = 2
 
-[node name="BoxContainer" parent="WorkerCommandCard/BasicBuildingButton" index="0"]
-mouse_filter = 2
-
 [node name="TextureRect" parent="WorkerCommandCard/BasicBuildingButton/BoxContainer" index="0"]
-mouse_filter = 2
 texture = ExtResource("5_in40n")
 
 [node name="AdvancedBuildingButton" parent="WorkerCommandCard" instance=ExtResource("2_8qja3")]
 custom_minimum_size = Vector2(43, 40)
 layout_mode = 2
 
-[node name="BoxContainer" parent="WorkerCommandCard/AdvancedBuildingButton" index="0"]
-mouse_filter = 2
-
 [node name="TextureRect" parent="WorkerCommandCard/AdvancedBuildingButton/BoxContainer" index="0"]
-mouse_filter = 2
 texture = ExtResource("6_ndwwp")
 
 [editable path="WorkerButtonBox/WorkerButton"]
