@@ -72,12 +72,13 @@ metadata/_edit_use_anchors_ = true
 [node name="TextureRect" parent="WorkerButtonBox/WorkerButton/BoxContainer" index="0"]
 texture = ExtResource("2_2qdn7")
 
-[node name="WorkerCommandCard" type="VBoxContainer" parent="."]
+[node name="WorkerCommandCard" type="GridContainer" parent="."]
 layout_mode = 0
 offset_left = 183.0
 offset_top = 7.0
-offset_right = 226.0
-offset_bottom = 91.0
+offset_right = 320.0
+offset_bottom = 47.0
+columns = 3
 
 [node name="BasicBuildingButton" parent="WorkerCommandCard" instance=ExtResource("2_8qja3")]
 custom_minimum_size = Vector2(43, 40)

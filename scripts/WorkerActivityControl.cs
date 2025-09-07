@@ -26,7 +26,7 @@ namespace starcraftbuildtrainer.scripts
         private TextureRect _activityTextureRect;
         private Label _workerCountLabel;
         private ProductionButton _workerButton;
-        private VBoxContainer _workerCommandCard;
+        private GridContainer _workerCommandCard;
         private Button _basicBuildingButton;
         private Button _advancedBuildingButton;
 
@@ -56,7 +56,7 @@ namespace starcraftbuildtrainer.scripts
             _activityTextureRect = GetNode<BoxContainer>(ACTIVITY_TEXTURE_BOX_NAME).GetNode<TextureRect>(ACTIVITY_TEXTURE_NAME);
             _workerCountLabel = GetNode<BoxContainer>(WORKER_COUNT_LABEL_BOX_NAME).GetNode<Label>(WORKER_COUNT_LABEL_NAME);
             _workerButton = GetNode<BoxContainer>(WORKER_BUTTON_BOX_NAME).GetNode<ProductionButton>(WORKER_BUTTON_NAME);
-            _workerCommandCard = GetNode<VBoxContainer>(WORKER_COMMAND_CARD_NAME);
+            _workerCommandCard = GetNode<GridContainer>(WORKER_COMMAND_CARD_NAME);
             _basicBuildingButton = _workerCommandCard.GetNode<Button>(BASIC_BUILDING_BUTTON_NAME);
             _advancedBuildingButton = _workerCommandCard.GetNode<Button>(ADVANCED_BUILDING_BUTTON_NAME);
 
