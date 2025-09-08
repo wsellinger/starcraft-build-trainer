@@ -1,7 +1,29 @@
 using Godot;
+using System.IO;
 
 namespace starcraftbuildtrainer.scripts
 {
+    public record WorkerActivityControlData(string ActivityTexturePath, ProductionButtonData[] CommandButtonData);
+    public static class WorkerActivityTypes
+    {
+        //Paths
+
+        private const string CONSTRUCTION_TEXTURE_PATH = "res://assets/art/terran/menu/workerBuildingIcon.png";
+        private const string MINERAL_TEXTURE_PATH = "res://assets/art/shared/mineralFields.png";
+        private const string GAS_TEXTURE_PATH = "res://assets/art/shared/vespeneGeyser.png";        
+        private const string BASIC_BUILDING_TEXTURE_PATH = "res://assets/art/terran/menu/basicBuilding.png";
+
+        //Buttons
+
+        private static readonly ProductionButtonData BasicBuildingButtonData = new("BasicBuilding", BASIC_BUILDING_TEXTURE_PATH);
+
+        //Controls
+
+        public static readonly WorkerActivityControlData Construction = new(CONSTRUCTION_TEXTURE_PATH, []);
+        public static readonly WorkerActivityControlData Minerals = new(MINERAL_TEXTURE_PATH, [BasicBuildingButtonData]);
+        public static readonly WorkerActivityControlData Gas = new(GAS_TEXTURE_PATH, [BasicBuildingButtonData]);
+    }
+
     public partial class WorkerActivityControl : Control
     {
         //Signals
@@ -44,6 +66,7 @@ namespace starcraftbuildtrainer.scripts
 
         private int _workerCount;
         private bool _isMenuOpen;
+        private Vector2 _buttonSize;
 
         //TODO implement construction buttons
         //TODO implement construction of supply depot
@@ -53,9 +76,12 @@ namespace starcraftbuildtrainer.scripts
 
         public override void _Ready()
         {
+            var workerButtonBox = GetNode<BoxContainer>(WORKER_BUTTON_BOX_NAME);
+            _buttonSize = workerButtonBox.Size;
+
             _activityTextureRect = GetNode<BoxContainer>(ACTIVITY_TEXTURE_BOX_NAME).GetNode<TextureRect>(ACTIVITY_TEXTURE_NAME);
             _workerCountLabel = GetNode<BoxContainer>(WORKER_COUNT_LABEL_BOX_NAME).GetNode<Label>(WORKER_COUNT_LABEL_NAME);
-            _workerButton = GetNode<BoxContainer>(WORKER_BUTTON_BOX_NAME).GetNode<ProductionButton>(WORKER_BUTTON_NAME);
+            _workerButton = workerButtonBox.GetNode<ProductionButton>(WORKER_BUTTON_NAME);
             _workerCommandCard = GetNode<GridContainer>(WORKER_COMMAND_CARD_NAME);
             _basicBuildingButton = _workerCommandCard.GetNode<Button>(BASIC_BUILDING_BUTTON_NAME);
             _advancedBuildingButton = _workerCommandCard.GetNode<Button>(ADVANCED_BUILDING_BUTTON_NAME);
@@ -63,10 +89,17 @@ namespace starcraftbuildtrainer.scripts
             _workerButton.Pressed += OnWorkerButtonPressed;
 
             _workerCommandCard.Visible = false;
-
         }
 
-        public void LoadActivityTexture(string path) => _activityTextureRect.Texture = GD.Load<Texture2D>(path);
+        public void Init(WorkerActivityControlData data)
+        {
+            _activityTextureRect.Texture = GD.Load<Texture2D>(data.ActivityTexturePath);
+
+            foreach (var buttonData in data.CommandButtonData)
+            {
+                _workerCommandCard.AddChild(ProductionButton.Instantiate(buttonData, _buttonSize));
+            }
+        }
 
         public void OpenMenu()
         {

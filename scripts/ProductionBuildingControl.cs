@@ -35,7 +35,6 @@ namespace starcraftbuildtrainer.scripts
         private readonly ResourceCost _workerResourceCost = new(50, 0);
 
         private const float PRODUCTION_BUTTON_X_BUFFER = 10;
-        private const string CONSTRUCTION_BUTTON_PATH = "res://scenes/production_button.tscn";
         private const string UNIT_TEXTURE_PATH = "res://assets/art/terran/units/scv.png";
 
         public override void _Ready()
@@ -56,8 +55,7 @@ namespace starcraftbuildtrainer.scripts
                 float x = parent.Position.X + parent.Size.X + PRODUCTION_BUTTON_X_BUFFER;
                 float size = parent.Size.Y / 3;
 
-                var scene = GD.Load<PackedScene>(CONSTRUCTION_BUTTON_PATH);
-                var button = scene.Instantiate<ProductionButton>();
+                var button = ProductionButton.Instantiate();
                 button.TexturePath = UNIT_TEXTURE_PATH;
                 button.Position = new Vector2(x, parent.Position.Y);
                 button.Size = new Vector2(size, size);

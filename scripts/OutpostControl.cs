@@ -18,8 +18,7 @@ namespace starcraftbuildtrainer.scripts
         private ProductionBuildingControl _townhallControl;
         private WorkerActivityControl _constructionControl;
         private WorkerActivityControl _mineralsControl;
-        private WorkerActivityControl _gasControlA;
-        private WorkerActivityControl _gasControlB;
+        private WorkerActivityControl[] _gasControls;
         private WorkerActivityControl[] _menuControls;
 
         private const string TOWNHALL_CONTROL_NAME = "TownHallControl";
@@ -27,10 +26,6 @@ namespace starcraftbuildtrainer.scripts
         private const string MINERALS_CONTROL_NAME = "MineralsControl";
         private const string GAS_CONTROL_A_NAME = "GasControl_A";
         private const string GAS_CONTROL_B_NAME = "GasControl_B";
-
-        private const string CONSTRUCTION_TEXTURE_PATH = "res://assets/art/terran/menu/workerBuildingIcon.png";
-        private const string MINERAL_TEXTURE_PATH = "res://assets/art/shared/mineralFields.png";
-        private const string GAS_TEXTURE_PATH = "res://assets/art/shared/vespeneGeyser.png";
 
         //Const
 
@@ -43,17 +38,19 @@ namespace starcraftbuildtrainer.scripts
             _townhallControl = GetNode<ProductionBuildingControl>(TOWNHALL_CONTROL_NAME);
             _constructionControl = GetNode<WorkerActivityControl>(IDLE_CONTROL_NAME);
             _mineralsControl = GetNode<WorkerActivityControl>(MINERALS_CONTROL_NAME);
-            _gasControlA = GetNode<WorkerActivityControl>(GAS_CONTROL_A_NAME);
-            _gasControlB = GetNode<WorkerActivityControl>(GAS_CONTROL_B_NAME);
+            _gasControls = [
+                GetNode<WorkerActivityControl>(GAS_CONTROL_A_NAME), 
+                GetNode<WorkerActivityControl>(GAS_CONTROL_B_NAME)];
 
-            _menuControls = [_constructionControl, _mineralsControl, _gasControlA, _gasControlB];
+            _menuControls = [_constructionControl, _mineralsControl, _gasControls[0], _gasControls[1]];
 
              //TODO implement same for townhall control
 
-            _constructionControl.LoadActivityTexture(CONSTRUCTION_TEXTURE_PATH);
-            _mineralsControl.LoadActivityTexture(MINERAL_TEXTURE_PATH);
-            _gasControlA.LoadActivityTexture(GAS_TEXTURE_PATH);
-            _gasControlB.LoadActivityTexture(GAS_TEXTURE_PATH);
+            _constructionControl.Init(WorkerActivityTypes.Construction);
+            _mineralsControl.Init(WorkerActivityTypes.Minerals);
+
+            foreach (var gasControl in _gasControls)
+                gasControl.Init(WorkerActivityTypes.Gas);
 
             //Callbacks
             _townhallControl.UnitProduced += OnWorkerProduced;
@@ -69,11 +66,9 @@ namespace starcraftbuildtrainer.scripts
             if (_mineralsControl.WorkerCount > 0)
                 EmitSignal(SignalName.MineralsMined, _mineralsControl.WorkerCount * WORKER_MINERALS_PER_SECOND * delta);
 
-            if (_gasControlA.WorkerCount > 0)
-                EmitSignal(SignalName.GasMined, _gasControlA.WorkerCount * WORKER_GAS_PER_SECOND * delta);
-
-            if (_gasControlB.WorkerCount > 0)
-                EmitSignal(SignalName.GasMined, _gasControlA.WorkerCount * WORKER_GAS_PER_SECOND * delta);
+            foreach (var gasControl in _gasControls)
+                if (gasControl.WorkerCount > 0)
+                    EmitSignal(SignalName.GasMined, gasControl.WorkerCount * WORKER_GAS_PER_SECOND * delta);
         }
 
         public void Init()

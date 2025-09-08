@@ -1,11 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://ck0ovmif5ly1g"]
+[gd_scene load_steps=5 format=3 uid="uid://ck0ovmif5ly1g"]
 
 [ext_resource type="Script" uid="uid://i2ilusies6pv" path="res://scripts/WorkerActivityControl.cs" id="1_cofvd"]
 [ext_resource type="Texture2D" uid="uid://cqhxj8cryn0qm" path="res://assets/art/terran/units/scv.png" id="2_2qdn7"]
 [ext_resource type="PackedScene" uid="uid://dyxjwpruku2ra" path="res://scenes/production_button.tscn" id="2_8qja3"]
 [ext_resource type="Texture2D" uid="uid://cy4dhdapq30xt" path="res://assets/art/terran/menu/workerBuildingIcon.png" id="2_in40n"]
-[ext_resource type="Texture2D" uid="uid://wrb8jw854sgm" path="res://assets/art/terran/menu/basicBuilding.png" id="5_in40n"]
-[ext_resource type="Texture2D" uid="uid://c5lr0w7jojmjb" path="res://assets/art/terran/menu/advancedBuilding.png" id="6_ndwwp"]
 
 [node name="WorkerActivityControl" type="Control"]
 layout_mode = 3
@@ -80,20 +78,4 @@ offset_right = 320.0
 offset_bottom = 47.0
 columns = 3
 
-[node name="BasicBuildingButton" parent="WorkerCommandCard" instance=ExtResource("2_8qja3")]
-custom_minimum_size = Vector2(43, 40)
-layout_mode = 2
-
-[node name="TextureRect" parent="WorkerCommandCard/BasicBuildingButton/BoxContainer" index="0"]
-texture = ExtResource("5_in40n")
-
-[node name="AdvancedBuildingButton" parent="WorkerCommandCard" instance=ExtResource("2_8qja3")]
-custom_minimum_size = Vector2(43, 40)
-layout_mode = 2
-
-[node name="TextureRect" parent="WorkerCommandCard/AdvancedBuildingButton/BoxContainer" index="0"]
-texture = ExtResource("6_ndwwp")
-
 [editable path="WorkerButtonBox/WorkerButton"]
-[editable path="WorkerCommandCard/BasicBuildingButton"]
-[editable path="WorkerCommandCard/AdvancedBuildingButton"]
