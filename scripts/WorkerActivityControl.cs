@@ -3,26 +3,6 @@ using System.IO;
 
 namespace starcraftbuildtrainer.scripts
 {
-    public record WorkerActivityControlData(string ActivityTexturePath, ProductionButtonData[] CommandButtonData);
-    public static class WorkerActivityTypes
-    {
-        //Paths
-
-        private const string CONSTRUCTION_TEXTURE_PATH = "res://assets/art/terran/menu/workerBuildingIcon.png";
-        private const string MINERAL_TEXTURE_PATH = "res://assets/art/shared/mineralFields.png";
-        private const string GAS_TEXTURE_PATH = "res://assets/art/shared/vespeneGeyser.png";        
-        private const string BASIC_BUILDING_TEXTURE_PATH = "res://assets/art/terran/menu/basicBuilding.png";
-
-        //Buttons
-
-        private static readonly ProductionButtonData BasicBuildingButtonData = new("BasicBuilding", BASIC_BUILDING_TEXTURE_PATH);
-
-        //Controls
-
-        public static readonly WorkerActivityControlData Construction = new(CONSTRUCTION_TEXTURE_PATH, []);
-        public static readonly WorkerActivityControlData Minerals = new(MINERAL_TEXTURE_PATH, [BasicBuildingButtonData]);
-        public static readonly WorkerActivityControlData Gas = new(GAS_TEXTURE_PATH, [BasicBuildingButtonData]);
-    }
 
     public partial class WorkerActivityControl : Control
     {
@@ -68,7 +48,7 @@ namespace starcraftbuildtrainer.scripts
         private bool _isMenuOpen;
         private Vector2 _buttonSize;
 
-        //TODO implement construction buttons
+        //TODO implement basic building menu
         //TODO implement construction of supply depot
         //TODO implement supply
         //TODO implement construction of refinery

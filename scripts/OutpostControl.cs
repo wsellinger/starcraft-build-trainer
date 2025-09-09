@@ -46,11 +46,11 @@ namespace starcraftbuildtrainer.scripts
 
              //TODO implement same for townhall control
 
-            _constructionControl.Init(WorkerActivityTypes.Construction);
-            _mineralsControl.Init(WorkerActivityTypes.Minerals);
+            _constructionControl.Init(WorkerActivityControlData.Construction);
+            _mineralsControl.Init(WorkerActivityControlData.Minerals);
 
             foreach (var gasControl in _gasControls)
-                gasControl.Init(WorkerActivityTypes.Gas);
+                gasControl.Init(WorkerActivityControlData.Gas);
 
             //Callbacks
             _townhallControl.UnitProduced += OnWorkerProduced;

@@ -2,8 +2,6 @@ using Godot;
 
 namespace starcraftbuildtrainer.scripts
 {
-    public record ProductionButtonData(string Name, string TexturePath);
-
     public partial class ProductionButton : Button
     {
         private static readonly PackedScene _scene = GD.Load<PackedScene>("res://scenes/production_button.tscn");
@@ -13,7 +11,7 @@ namespace starcraftbuildtrainer.scripts
         public static ProductionButton Instantiate(ProductionButtonData data, Vector2 size)
         {
             var button = _scene.Instantiate<ProductionButton>();
-            button.Name = data.Name;
+            button.Name = data.Type.ToString();
             button.TexturePath = data.TexturePath;
             button.CustomMinimumSize = size;
             return button;
