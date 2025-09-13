@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://ck0ovmif5ly1g"]
+[gd_scene load_steps=6 format=3 uid="uid://ck0ovmif5ly1g"]
 
 [ext_resource type="Script" uid="uid://i2ilusies6pv" path="res://scripts/WorkerActivityControl.cs" id="1_cofvd"]
 [ext_resource type="Texture2D" uid="uid://cqhxj8cryn0qm" path="res://assets/art/terran/units/scv.png" id="2_2qdn7"]
 [ext_resource type="PackedScene" uid="uid://dyxjwpruku2ra" path="res://scenes/production_button.tscn" id="2_8qja3"]
 [ext_resource type="Texture2D" uid="uid://cy4dhdapq30xt" path="res://assets/art/terran/menu/workerBuildingIcon.png" id="2_in40n"]
+[ext_resource type="Script" uid="uid://ci8jnwqjnndfu" path="res://scripts/WorkerCommandCard.cs" id="5_8qja3"]
 
 [node name="WorkerActivityControl" type="Control"]
 layout_mode = 3
@@ -70,12 +71,12 @@ metadata/_edit_use_anchors_ = true
 [node name="TextureRect" parent="WorkerButtonBox/WorkerButton/BoxContainer" index="0"]
 texture = ExtResource("2_2qdn7")
 
-[node name="WorkerCommandCard" type="GridContainer" parent="."]
+[node name="WorkerCommandCard" type="Container" parent="."]
 layout_mode = 0
 offset_left = 183.0
 offset_top = 7.0
 offset_right = 320.0
 offset_bottom = 47.0
-columns = 3
+script = ExtResource("5_8qja3")
 
 [editable path="WorkerButtonBox/WorkerButton"]
