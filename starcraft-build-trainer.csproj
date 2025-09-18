@@ -4,4 +4,8 @@
     <EnableDynamicLoading>true</EnableDynamicLoading>
     <RootNamespace>starcraftbuildtrainer</RootNamespace>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="addons\DynamicLabel\icon.svg" />
+    <None Include="addons\dynamiclabel\plugin.cfg" />
+  </ItemGroup>
 </Project>

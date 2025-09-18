@@ -23,3 +23,7 @@ window/size/viewport_height=720
 [dotnet]
 
 project/assembly_name="starcraft-build-trainer"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/DynamicLabel/plugin.cfg")
