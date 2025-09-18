@@ -13,20 +13,54 @@ script = ExtResource("1_5e1d3")
 metadata/_edit_lock_ = true
 
 [node name="TownHallControl" parent="." instance=ExtResource("4_5e1d3")]
-offset_left = 256.0
-offset_right = 408.0
-offset_bottom = 176.0
+layout_mode = 1
+anchor_left = 0.680556
+anchor_right = 1.01389
+anchor_bottom = 0.867188
 
 [node name="ConstructionControl" parent="." instance=ExtResource("3_5e1d3")]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -0.0273437
+anchor_right = 0.419273
+anchor_bottom = 0.254549
+offset_right = 96.499
+offset_bottom = 28.8355
+scale = Vector2(0.853103, 0.853103)
+metadata/_edit_use_anchors_ = true
 
 [node name="MineralsControl" parent="." instance=ExtResource("3_5e1d3")]
-offset_top = 40.0
-offset_bottom = 104.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.00173611
+anchor_top = 0.191407
+anchor_right = 0.420017
+anchor_bottom = 0.473299
+offset_right = 97.07
+offset_bottom = 28.8355
+scale = Vector2(0.853103, 0.853103)
+metadata/_edit_use_anchors_ = true
 
 [node name="GasControl_A" parent="." instance=ExtResource("3_5e1d3")]
-offset_top = 80.0
-offset_bottom = 144.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.00173611
+anchor_top = 0.417969
+anchor_right = 0.420017
+anchor_bottom = 0.699862
+offset_right = 97.07
+offset_bottom = 28.8355
+scale = Vector2(0.853103, 0.853103)
+metadata/_edit_use_anchors_ = true
 
 [node name="GasControl_B" parent="." instance=ExtResource("3_5e1d3")]
-offset_top = 120.0
-offset_bottom = 184.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.00173611
+anchor_top = 0.640625
+anchor_right = 0.420017
+anchor_bottom = 0.922518
+offset_right = 97.07
+offset_bottom = 28.8355
+scale = Vector2(0.853103, 0.853103)
+metadata/_edit_use_anchors_ = true

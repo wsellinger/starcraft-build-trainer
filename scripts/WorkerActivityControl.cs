@@ -27,15 +27,12 @@ namespace starcraftbuildtrainer.scripts
         //Nodes
 
         private TextureRect _activityTextureRect;
-        private Label _workerCountLabel;
+        private DynamicLabel _workerCountLabel;
         private ProductionButton _workerButton;
         private WorkerCommandCard _workerCommandCard;
 
-        private const string ACTIVITY_TEXTURE_BOX_NAME = "ActivityTextureBox";
         private const string ACTIVITY_TEXTURE_NAME = "ActivityTexture";
-        private const string WORKER_COUNT_LABEL_BOX_NAME = "WorkerCountLabelBox";
         private const string WORKER_COUNT_LABEL_NAME = "WorkerCountLabel";
-        private const string WORKER_BUTTON_BOX_NAME = "WorkerButtonBox";
         private const string WORKER_BUTTON_NAME = "WorkerButton";
         private const string WORKER_COMMAND_CARD_NAME = "WorkerCommandCard";
 
@@ -51,16 +48,14 @@ namespace starcraftbuildtrainer.scripts
 
         public override void _Ready()
         {
-            _activityTextureRect = GetNode<BoxContainer>(ACTIVITY_TEXTURE_BOX_NAME).GetNode<TextureRect>(ACTIVITY_TEXTURE_NAME);
-            _workerCountLabel = GetNode<BoxContainer>(WORKER_COUNT_LABEL_BOX_NAME).GetNode<Label>(WORKER_COUNT_LABEL_NAME);
-            
-            var workerButtonBox = GetNode<BoxContainer>(WORKER_BUTTON_BOX_NAME);
-            _workerButton = workerButtonBox.GetNode<ProductionButton>(WORKER_BUTTON_NAME);
+            _activityTextureRect = GetNode<TextureRect>(ACTIVITY_TEXTURE_NAME);
+            _workerCountLabel = GetNode<DynamicLabel>(WORKER_COUNT_LABEL_NAME); //TODO dynamic font size
+            _workerButton = GetNode<ProductionButton>(WORKER_BUTTON_NAME);
             _workerCommandCard = GetNode<WorkerCommandCard>(WORKER_COMMAND_CARD_NAME);
 
             _workerButton.Pressed += OnWorkerButtonPressed;
 
-            _workerCommandCard.ButtonSize = workerButtonBox.Size;
+            _workerCommandCard.ButtonSize = _workerButton.Size;
             _workerCommandCard.Visible = false;
         }
 
@@ -86,7 +81,7 @@ namespace starcraftbuildtrainer.scripts
         private void OnWorkerButtonPressed()
         {
             if (!_isMenuOpen)
-                OpenMenu();
+                OpenMenu(); //TODO check if workers > 0 before opening
             else
                 CloseMenu();
         }

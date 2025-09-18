@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://ck0ovmif5ly1g"]
+[gd_scene load_steps=7 format=3 uid="uid://ck0ovmif5ly1g"]
 
 [ext_resource type="Script" uid="uid://i2ilusies6pv" path="res://scripts/WorkerActivityControl.cs" id="1_cofvd"]
 [ext_resource type="Texture2D" uid="uid://cqhxj8cryn0qm" path="res://assets/art/terran/units/scv.png" id="2_2qdn7"]
 [ext_resource type="PackedScene" uid="uid://dyxjwpruku2ra" path="res://scenes/production_button.tscn" id="2_8qja3"]
-[ext_resource type="Texture2D" uid="uid://cy4dhdapq30xt" path="res://assets/art/terran/menu/workerBuildingIcon.png" id="2_in40n"]
+[ext_resource type="Texture2D" uid="uid://bw4licvck64er" path="res://assets/art/shared/mineralFields.png" id="2_in40n"]
+[ext_resource type="Script" uid="uid://cko8jyx7ht4c3" path="res://addons/DynamicLabel/DynamicLabel.cs" id="3_in40n"]
 [ext_resource type="Script" uid="uid://ci8jnwqjnndfu" path="res://scripts/WorkerCommandCard.cs" id="5_8qja3"]
 
 [node name="WorkerActivityControl" type="Control"]
@@ -13,54 +14,54 @@ offset_right = 216.0
 offset_bottom = 64.0
 scale = Vector2(0.7145, 0.7145)
 script = ExtResource("1_cofvd")
-metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
-[node name="ActivityTextureBox" type="BoxContainer" parent="."]
+[node name="ReferenceRect" type="ReferenceRect" parent="."]
 layout_mode = 2
+anchor_left = 0.727037
+anchor_top = 0.113203
+anchor_right = 1.335
+anchor_bottom = 0.738203
+mouse_filter = 1
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="ActivityTexture" type="TextureRect" parent="."]
+layout_mode = 2
+anchor_left = 0.0462963
 anchor_top = 0.00944722
-anchor_right = 0.305556
-anchor_bottom = 0.759447
-alignment = 1
-metadata/_edit_use_anchors_ = true
-metadata/_edit_group_ = true
-
-[node name="ActivityTexture" type="TextureRect" parent="ActivityTextureBox"]
-layout_mode = 2
+anchor_right = 0.259332
+anchor_bottom = 0.743822
 texture = ExtResource("2_in40n")
-expand_mode = 3
-
-[node name="WorkerCountLabelBox" type="BoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.407407
-anchor_top = 0.134447
-anchor_right = 0.523148
-anchor_bottom = 0.618822
+expand_mode = 5
+stretch_mode = 5
 metadata/_edit_use_anchors_ = true
-metadata/_edit_group_ = true
 
-[node name="WorkerCountLabel" type="Label" parent="WorkerCountLabelBox"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 22
+[node name="WorkerCountLabel" type="Label" parent="."]
+custom_minimum_size = Vector2(10, 12)
+layout_mode = 0
+anchor_left = 0.310185
+anchor_top = 0.109375
+anchor_right = 0.467593
+anchor_bottom = 0.703125
+theme_override_font_sizes/font_size = 27
 text = "00"
-vertical_alignment = 2
+text_overrun_behavior = 1
+script = ExtResource("3_in40n")
+metadata/_custom_type_script = "uid://cko8jyx7ht4c3"
 metadata/_edit_use_anchors_ = true
 
-[node name="WorkerButtonBox" type="BoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.62963
-anchor_top = 0.0907104
-anchor_right = 0.828704
-anchor_bottom = 0.71571
-metadata/_edit_group_ = true
-metadata/_edit_use_anchors_ = true
-
-[node name="WorkerButton" parent="WorkerButtonBox" instance=ExtResource("2_8qja3")]
+[node name="WorkerButton" parent="." instance=ExtResource("2_8qja3")]
 layout_mode = 2
+anchors_preset = 0
+anchor_left = 0.519478
+anchor_top = 0.0907104
+anchor_right = 0.713922
+anchor_bottom = 0.700085
 size_flags_horizontal = 3
+metadata/_edit_group_ = true
 
-[node name="BoxContainer" parent="WorkerButtonBox/WorkerButton" index="0"]
+[node name="BoxContainer" parent="WorkerButton" index="0"]
 anchors_preset = -1
 anchor_left = -0.0119048
 anchor_right = 1.0119
@@ -68,15 +69,17 @@ anchor_bottom = 1.00912
 alignment = 0
 metadata/_edit_use_anchors_ = true
 
-[node name="TextureRect" parent="WorkerButtonBox/WorkerButton/BoxContainer" index="0"]
+[node name="TextureRect" parent="WorkerButton/BoxContainer" index="0"]
 texture = ExtResource("2_2qdn7")
 
 [node name="WorkerCommandCard" type="Container" parent="."]
-layout_mode = 0
-offset_left = 183.0
-offset_top = 7.0
-offset_right = 320.0
-offset_bottom = 47.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.731481
+anchor_top = 0.109375
+anchor_right = 1.3287
+anchor_bottom = 0.734375
 script = ExtResource("5_8qja3")
+metadata/_edit_use_anchors_ = true
 
-[editable path="WorkerButtonBox/WorkerButton"]
+[editable path="WorkerButton"]
