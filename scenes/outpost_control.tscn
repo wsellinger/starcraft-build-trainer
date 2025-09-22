@@ -6,61 +6,78 @@
 
 [node name="OutpostControl" type="Control"]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 576.0
-offset_bottom = 256.0
+anchor_right = 0.3
+anchor_bottom = 0.237037
 script = ExtResource("1_5e1d3")
-metadata/_edit_lock_ = true
+metadata/_edit_horizontal_guides_ = [192.0]
+metadata/_edit_vertical_guides_ = [912.0]
+metadata/_edit_use_anchors_ = true
 
 [node name="TownHallControl" parent="." instance=ExtResource("4_5e1d3")]
 layout_mode = 1
-anchor_left = 0.680556
-anchor_right = 1.01389
+anchor_left = 0.572917
+anchor_right = 0.906251
 anchor_bottom = 0.867188
+offset_right = 0.00012207
 
 [node name="ConstructionControl" parent="." instance=ExtResource("3_5e1d3")]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = -0.0273437
 anchor_right = 0.419273
-anchor_bottom = 0.254549
+anchor_bottom = 0.281893
 offset_right = 96.499
 offset_bottom = 28.8355
-scale = Vector2(0.853103, 0.853103)
+scale = Vector2(0.704375, 0.704375)
 metadata/_edit_use_anchors_ = true
 
 [node name="MineralsControl" parent="." instance=ExtResource("3_5e1d3")]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.00173611
-anchor_top = 0.191407
+anchor_top = 0.187501
 anchor_right = 0.420017
-anchor_bottom = 0.473299
+anchor_bottom = 0.469393
 offset_right = 97.07
 offset_bottom = 28.8355
-scale = Vector2(0.853103, 0.853103)
+scale = Vector2(0.704375, 0.704375)
 metadata/_edit_use_anchors_ = true
 
 [node name="GasControl_A" parent="." instance=ExtResource("3_5e1d3")]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.00173611
-anchor_top = 0.417969
+anchor_top = 0.371094
 anchor_right = 0.420017
-anchor_bottom = 0.699862
+anchor_bottom = 0.652987
 offset_right = 97.07
 offset_bottom = 28.8355
-scale = Vector2(0.853103, 0.853103)
+scale = Vector2(0.704375, 0.704375)
 metadata/_edit_use_anchors_ = true
 
 [node name="GasControl_B" parent="." instance=ExtResource("3_5e1d3")]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.00173611
-anchor_top = 0.640625
+anchor_top = 0.554688
 anchor_right = 0.420017
-anchor_bottom = 0.922518
+anchor_bottom = 0.836581
 offset_right = 97.07
 offset_bottom = 28.8355
-scale = Vector2(0.853103, 0.853103)
+scale = Vector2(0.704375, 0.704375)
+metadata/_edit_use_anchors_ = true
+
+[node name="ReferenceRect" type="ReferenceRect" parent="."]
+layout_mode = 2
+anchor_left = 1.01389
+anchor_right = 1.56944
+anchor_bottom = 0.75
+metadata/_edit_use_anchors_ = true
+
+[node name="BuildingsGrid" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.01389
+anchor_right = 1.56944
+anchor_bottom = 0.75
+columns = 5
 metadata/_edit_use_anchors_ = true

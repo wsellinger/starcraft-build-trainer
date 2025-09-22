@@ -7,10 +7,10 @@ namespace starcraftbuildtrainer.scripts
 
     public partial class WorkerActivityControl : Control
     {
-        //Signals
+        //Events
 
-        [Signal] public delegate void MenuOpenedEventHandler(WorkerActivityControl control);
-        [Signal] public delegate void ActivityCompleteEventHandler(double value);
+        public event Action<WorkerActivityControl> MenuOpened;
+        public event Action<WorkerActivityControl, ActionButtonData> ActionSelected;
 
         //Properties
 
@@ -54,9 +54,15 @@ namespace starcraftbuildtrainer.scripts
             _workerCommandCard = GetNode<WorkerCommandCard>(WORKER_COMMAND_CARD_NAME);
 
             _workerButton.Pressed += OnWorkerButtonPressed;
+            _workerCommandCard.ActionSelected += OnActionSelected;
 
             _workerCommandCard.ButtonSize = _workerButton.Size;
             _workerCommandCard.Visible = false;
+        }
+
+        private void OnActionSelected(ActionButtonData data)
+        {
+            ActionSelected.Invoke(this, data);
         }
 
         public void Init(WorkerActivityControlData data)
@@ -69,7 +75,7 @@ namespace starcraftbuildtrainer.scripts
         {
             _isMenuOpen = true;
             _workerCommandCard.Open();
-            EmitSignal(SignalName.MenuOpened, this);
+            MenuOpened.Invoke(this);
         }
 
         public void CloseMenu()

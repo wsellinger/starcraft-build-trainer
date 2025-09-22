@@ -6,12 +6,18 @@ namespace starcraftbuildtrainer.scripts
 {
     public partial class WorkerCommandCard : Container
     {
+        //Events
+
+        public event Action<ActionButtonData> ActionSelected;
+
+        //Properties
+
         public Vector2 ButtonSize { get; set; }
 
         private GridContainer _rootMenu;
         private GridContainer _basicBuildingMenu;
         private GridContainer _advancedBuildingMenu;
-        private Dictionary<CommandCardType, GridContainer> _commandCards;
+        private Dictionary<MenuType, GridContainer> _commandCards;
 
         private GridContainer _currentCommandCard;
 
@@ -24,9 +30,9 @@ namespace starcraftbuildtrainer.scripts
             _advancedBuildingMenu = AddGridContainer();
             _commandCards = new()
             {
-                { CommandCardType.Root, _rootMenu },
-                { CommandCardType.Basic, _basicBuildingMenu },
-                { CommandCardType.Advanced, _advancedBuildingMenu },
+                { MenuType.Root, _rootMenu },
+                { MenuType.Basic, _basicBuildingMenu },
+                { MenuType.Advanced, _advancedBuildingMenu },
             };
 
             _currentCommandCard = _rootMenu;
@@ -55,39 +61,25 @@ namespace starcraftbuildtrainer.scripts
         public void Close()
         {
             Hide();
-            SelectCommandCardType(CommandCardType.Root);
+            SelectCommandCardType(MenuType.Root);
         }
 
         private void OnCommandButtonSelected(ProductionButton button)
         {
-            switch (button.Type)
+            switch (button.Data)
             {
-                case ProductionButtonType.GoToMinerals:
-                    //TODO implement
+                case MenuButtonData menuButtonData:
+                    SelectCommandCardType(menuButtonData.NextMenu);
                     break;
-                case ProductionButtonType.GoToGas:
-                    //TODO implement
+                case ActionButtonData actionButtonData:
+                    ActionSelected.Invoke(actionButtonData);
                     break;
-                case ProductionButtonType.BasicBuilding:
-                    SelectCommandCardType(CommandCardType.Basic);
-                    break;
-                case ProductionButtonType.AdvancedBuilding:
-                    SelectCommandCardType(CommandCardType.Advanced);
-                    //TODO implement
-                    break;
-                case ProductionButtonType.SupplyDepot:
-                    //TODO build supply depot
-                    break;
-                case ProductionButtonType.Cancel:
-                    SelectCommandCardType(CommandCardType.Root);
-                    break;
-                case ProductionButtonType.None: 
                 default:
                     break;
             }
         }
 
-        private void SelectCommandCardType(CommandCardType type)
+        private void SelectCommandCardType(MenuType type)
         {
             _currentCommandCard.Hide();
             _currentCommandCard = _commandCards[type];

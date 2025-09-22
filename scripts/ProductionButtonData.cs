@@ -1,64 +1,67 @@
 namespace starcraftbuildtrainer.scripts
 {
-    public record ProductionButtonData(ProductionButtonType Type, CommandCardType Menu, string TexturePath)
+    public record ProductionButtonData(MenuType Menu, string TexturePath)
+    {
+        public static readonly ProductionButtonData[] BuildingMenu = [
+            //Root
+            MenuButtonData.BasicBuilding, MenuButtonData.AdvancedBuilding,
+            //Basic
+            BuildButtonData.SupplyDepot, MenuButtonData.CancelBasic,
+            //Advanced
+            BuildButtonData.Factory, MenuButtonData.CancelAdvaned,
+        ];
+    }
+
+    public record MenuButtonData(MenuType Menu, string TexturePath, MenuType NextMenu) : ProductionButtonData(Menu, TexturePath)
     {
         //Statics
 
-        //Root
-
-        public static readonly ProductionButtonData BasicBuilding = new(
-            ProductionButtonType.BasicBuilding,
-            CommandCardType.Root,
-            BASIC_BUILDING_TEXTURE_PATH);
-
-        public static readonly ProductionButtonData AdvancedBuilding = new(
-            ProductionButtonType.AdvancedBuilding,
-            CommandCardType.Root,
-            ADVANCED_BUILDING_TEXTURE_PATH);
-
-        //Basic
-
-        public static readonly ProductionButtonData SupplyDepot = new(
-            ProductionButtonType.SupplyDepot, 
-            CommandCardType.Basic, 
-            SUPPLY_DEPOT_TEXTURE_PATH);
-
-        public static readonly ProductionButtonData CancelBasic = new(
-            ProductionButtonType.Cancel,
-            CommandCardType.Basic,
-            CANCEL_TEXTURE_PATH);
-
-        //Advanced
-
-        public static readonly ProductionButtonData Factory = new(
-            ProductionButtonType.Factory,
-            CommandCardType.Advanced,
-            FACTORY_TEXTURE_PATH);
-
-        public static readonly ProductionButtonData CancelAdvaned = new(
-            ProductionButtonType.Cancel,
-            CommandCardType.Advanced,
-            CANCEL_TEXTURE_PATH);
-
-        public static readonly ProductionButtonData[] BuildingMenu = [
-            //Root
-            BasicBuilding, AdvancedBuilding,
-            //Basic
-            SupplyDepot, CancelBasic,
-            //Advanced
-            Factory, CancelAdvaned,
-        ];
+        public static readonly MenuButtonData BasicBuilding = new(MenuType.Root, BASIC_BUILDING_TEXTURE_PATH, MenuType.Basic);
+        public static readonly MenuButtonData AdvancedBuilding = new(MenuType.Root, ADVANCED_BUILDING_TEXTURE_PATH, MenuType.Advanced);
+        public static readonly MenuButtonData CancelBasic = new(MenuType.Basic, CANCEL_TEXTURE_PATH, MenuType.Root);
+        public static readonly MenuButtonData CancelAdvaned = new(MenuType.Advanced, CANCEL_TEXTURE_PATH, MenuType.Root);
 
         //Paths
 
         private const string CANCEL_TEXTURE_PATH = "res://assets/art/shared/cancel_button.png";
         private const string BASIC_BUILDING_TEXTURE_PATH = "res://assets/art/terran/menu/basicBuilding.png";
         private const string ADVANCED_BUILDING_TEXTURE_PATH = "res://assets/art/terran/menu/advancedBuilding.png";
-        private const string SUPPLY_DEPOT_TEXTURE_PATH = "res://assets/art/terran/buildings/supplyDepot.png";
-        private const string FACTORY_TEXTURE_PATH = "res://assets/art/terran/buildings/factory.png";
     }
 
-    public enum CommandCardType
+    public record ActionButtonData(MenuType Menu, string TexturePath) : ProductionButtonData(Menu, TexturePath);
+
+    public record GatherButtonData(MenuType Menu, string TexturePath, GatherType Type) : ActionButtonData(Menu, TexturePath)
+    {
+        //Statics
+
+        public static readonly GatherButtonData Minerals = new(MenuType.Root, GATHER_MINERALS_TEXTURE_PATH, GatherType.Minerals);
+        public static readonly GatherButtonData Gas = new(MenuType.Root, GATHER_GAS_TEXTURE_PATH, GatherType.Gas);
+
+        //Paths
+
+        private const string GATHER_MINERALS_TEXTURE_PATH = "res://assets/art/shared/gatherMinerals.png";
+        private const string GATHER_GAS_TEXTURE_PATH = "res://assets/art/shared/gatherGas.png";
+
+        public override string ToString() => $"Gather{Type}";
+    }
+
+    public record BuildButtonData(MenuType Menu, string TexturePath, BuildingType Type) : ActionButtonData(Menu, TexturePath)
+    {
+        //Statics
+
+        public static readonly BuildButtonData SupplyDepot = new(MenuType.Basic, SUPPLY_DEPOT_TEXTURE_PATH, BuildingType.SupplyDepot);
+        public static readonly BuildButtonData Factory = new(MenuType.Advanced, FACTORY_TEXTURE_PATH, BuildingType.Factory);
+        
+        //Paths
+        
+        private const string SUPPLY_DEPOT_TEXTURE_PATH = "res://assets/art/terran/buildings/supplyDepot.png";
+        private const string FACTORY_TEXTURE_PATH = "res://assets/art/terran/buildings/factory.png";
+
+        public override string ToString() => $"Build{Type}";
+    }
+
+
+    public enum MenuType
     {
         None,
         Root,
@@ -66,22 +69,17 @@ namespace starcraftbuildtrainer.scripts
         Advanced,
     }
 
-    public enum ProductionButtonType
+    public enum GatherType
     {
         None,
-        Cancel,
+        Minerals,
+        Gas,
+    }
 
-        //Root
-        GoToMinerals,
-        GoToGas,
-
-        BasicBuilding,
-        AdvancedBuilding,
-
-        //Basic
+    public enum BuildingType
+    {
+        None,
         SupplyDepot,
-
-        //Advanced
         Factory,
     }
 }

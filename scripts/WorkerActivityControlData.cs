@@ -5,8 +5,8 @@ namespace starcraftbuildtrainer.scripts
         //Statics
 
         public static readonly WorkerActivityControlData Construction = new(CONSTRUCTION_TEXTURE_PATH, []);
-        public static readonly WorkerActivityControlData Minerals = new(MINERAL_TEXTURE_PATH, ProductionButtonData.BuildingMenu);
-        public static readonly WorkerActivityControlData Gas = new(GAS_TEXTURE_PATH, ProductionButtonData.BuildingMenu);
+        public static readonly WorkerActivityControlData Minerals = new(MINERAL_TEXTURE_PATH, [GatherButtonData.Gas, .. ProductionButtonData.BuildingMenu]);
+        public static readonly WorkerActivityControlData Gas = new(GAS_TEXTURE_PATH, [GatherButtonData.Minerals, .. ProductionButtonData.BuildingMenu]);
 
         //Paths
 

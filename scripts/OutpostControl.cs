@@ -56,7 +56,10 @@ namespace starcraftbuildtrainer.scripts
             _townhallControl.UnitProduced += OnWorkerProduced;
 
             foreach (var menuControl in _menuControls)
+            {
                 menuControl.MenuOpened += OnControlMenuOpened;
+                menuControl.ActionSelected += OnActionSelected;
+            }
         }
 
         public override void _Process(double delta)
@@ -86,11 +89,11 @@ namespace starcraftbuildtrainer.scripts
             _mineralsControl.WorkerCount++;
         }
 
-        private void OnControlMenuOpened(WorkerActivityControl control)
+        private void OnControlMenuOpened(WorkerActivityControl eventDispatcher)
         {
             foreach (var menuControl in _menuControls)
             {
-                if (menuControl == control)
+                if (menuControl == eventDispatcher)
                 {
                     menuControl.MoveToFront();
                 }
@@ -98,6 +101,21 @@ namespace starcraftbuildtrainer.scripts
                 {
                     menuControl.CloseMenu();
                 }
+            }
+        }
+
+        private void OnActionSelected(WorkerActivityControl eventDispatcher, ActionButtonData data)
+        {
+            switch (data)
+            {
+                case GatherButtonData gatherButtonData:
+                    //TODO move worker from one control to another
+                    break;
+                case BuildButtonData buildButtonData:
+                    //TODO add building to building grid
+                    break;
+                default:
+                    break;
             }
         }
     }
