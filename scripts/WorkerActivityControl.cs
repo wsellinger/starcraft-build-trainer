@@ -1,6 +1,5 @@
 using Godot;
 using System;
-using System.IO;
 
 namespace starcraftbuildtrainer.scripts
 {
@@ -41,7 +40,6 @@ namespace starcraftbuildtrainer.scripts
         private int _workerCount;
         private bool _isMenuOpen;
 
-        //TODO implement construction of supply depot
         //TODO implement supply
         //TODO implement construction of refinery
         //TODO implement gotoMinerals and gotoGas on the appropriate controls
@@ -49,7 +47,7 @@ namespace starcraftbuildtrainer.scripts
         public override void _Ready()
         {
             _activityTextureRect = GetNode<TextureRect>(ACTIVITY_TEXTURE_NAME);
-            _workerCountLabel = GetNode<DynamicLabel>(WORKER_COUNT_LABEL_NAME); //TODO dynamic font size
+            _workerCountLabel = GetNode<DynamicLabel>(WORKER_COUNT_LABEL_NAME); //TODO add ratio
             _workerButton = GetNode<ProductionButton>(WORKER_BUTTON_NAME);
             _workerCommandCard = GetNode<WorkerCommandCard>(WORKER_COMMAND_CARD_NAME);
 

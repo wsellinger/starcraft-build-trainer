@@ -10,7 +10,7 @@ anchor_right = 0.3
 anchor_bottom = 0.237037
 script = ExtResource("1_5e1d3")
 metadata/_edit_horizontal_guides_ = [192.0]
-metadata/_edit_vertical_guides_ = [912.0]
+metadata/_edit_vertical_guides_ = [944.0]
 metadata/_edit_use_anchors_ = true
 
 [node name="TownHallControl" parent="." instance=ExtResource("4_5e1d3")]
@@ -68,16 +68,20 @@ metadata/_edit_use_anchors_ = true
 
 [node name="ReferenceRect" type="ReferenceRect" parent="."]
 layout_mode = 2
-anchor_left = 1.01389
-anchor_right = 1.56944
+anchor_left = 1.08333
+anchor_right = 1.63888
 anchor_bottom = 0.75
+offset_right = 0.00323486
+offset_bottom = 3.05176e-05
 metadata/_edit_use_anchors_ = true
 
-[node name="BuildingsGrid" type="GridContainer" parent="."]
+[node name="BuildingGrid" type="GridContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 1.01389
-anchor_right = 1.56944
+anchor_left = 1.08333
+anchor_right = 1.63888
 anchor_bottom = 0.75
+offset_right = 0.00323486
+offset_bottom = 3.05176e-05
 columns = 5
 metadata/_edit_use_anchors_ = true

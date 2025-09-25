@@ -45,12 +45,12 @@ namespace starcraftbuildtrainer.scripts
         public override string ToString() => $"Gather{Type}";
     }
 
-    public record BuildButtonData(MenuType Menu, string TexturePath, BuildingType Type) : ActionButtonData(Menu, TexturePath)
+    public record BuildButtonData(MenuType Menu, string TexturePath, BuildingIdentity Type) : ActionButtonData(Menu, TexturePath)
     {
         //Statics
 
-        public static readonly BuildButtonData SupplyDepot = new(MenuType.Basic, SUPPLY_DEPOT_TEXTURE_PATH, BuildingType.SupplyDepot);
-        public static readonly BuildButtonData Factory = new(MenuType.Advanced, FACTORY_TEXTURE_PATH, BuildingType.Factory);
+        public static readonly BuildButtonData SupplyDepot = new(MenuType.Basic, SUPPLY_DEPOT_TEXTURE_PATH, BuildingIdentity.SupplyDepot);
+        public static readonly BuildButtonData Factory = new(MenuType.Advanced, FACTORY_TEXTURE_PATH, BuildingIdentity.Factory);
         
         //Paths
         
@@ -74,12 +74,5 @@ namespace starcraftbuildtrainer.scripts
         None,
         Minerals,
         Gas,
-    }
-
-    public enum BuildingType
-    {
-        None,
-        SupplyDepot,
-        Factory,
     }
 }

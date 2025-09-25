@@ -1,4 +1,5 @@
 using Godot;
+using System;
 
 namespace starcraftbuildtrainer.scripts
 {
@@ -20,12 +21,18 @@ namespace starcraftbuildtrainer.scripts
         private WorkerActivityControl _mineralsControl;
         private WorkerActivityControl[] _gasControls;
         private WorkerActivityControl[] _menuControls;
+        private GridContainer _buildingGrid;
 
         private const string TOWNHALL_CONTROL_NAME = "TownHallControl";
         private const string IDLE_CONTROL_NAME = "ConstructionControl";
         private const string MINERALS_CONTROL_NAME = "MineralsControl";
         private const string GAS_CONTROL_A_NAME = "GasControl_A";
         private const string GAS_CONTROL_B_NAME = "GasControl_B";
+        private const string BUILDING_GRID_NAME = "BuildingGrid";
+
+        //Data
+        private Control[] _buildings;
+        private float _columnWidth;
 
         //Const
 
@@ -41,6 +48,7 @@ namespace starcraftbuildtrainer.scripts
             _gasControls = [
                 GetNode<WorkerActivityControl>(GAS_CONTROL_A_NAME), 
                 GetNode<WorkerActivityControl>(GAS_CONTROL_B_NAME)];
+            _buildingGrid = GetNode<GridContainer>(BUILDING_GRID_NAME);
 
             _menuControls = [_constructionControl, _mineralsControl, _gasControls[0], _gasControls[1]];
 
@@ -52,6 +60,8 @@ namespace starcraftbuildtrainer.scripts
             foreach (var gasControl in _gasControls)
                 gasControl.Init(WorkerActivityControlData.Gas);
 
+            _columnWidth = _buildingGrid.Size.X / _buildingGrid.Columns;
+            
             //Callbacks
             _townhallControl.UnitProduced += OnWorkerProduced;
 
@@ -112,10 +122,20 @@ namespace starcraftbuildtrainer.scripts
                     //TODO move worker from one control to another
                     break;
                 case BuildButtonData buildButtonData:
-                    //TODO add building to building grid
+                    BuildBuilding(buildButtonData.Type);
                     break;
                 default:
                     break;
+            }
+        }
+
+        private void BuildBuilding(BuildingIdentity buildingIdentity)
+        {
+            var data = BuildingData.Map[buildingIdentity];
+            if (PaymentProcessor.MakePayment(data.Cost))
+            {
+                var building = new BuildingControl(data, _columnWidth);
+                _buildingGrid.AddChild(building);
             }
         }
     }
