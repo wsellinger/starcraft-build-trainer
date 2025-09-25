@@ -1,4 +1,4 @@
 namespace starcraftbuildtrainer.scripts
 {
-    public record ResourceCost(uint Minerals, uint Gas);
+    public record ResourceCost(uint Minerals, uint Gas, uint Supply);
 }

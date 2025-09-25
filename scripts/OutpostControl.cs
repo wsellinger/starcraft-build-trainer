@@ -12,7 +12,8 @@ namespace starcraftbuildtrainer.scripts
 
         //References
 
-        public IPaymentProcessor PaymentProcessor { private get; set; }
+        public IResourceManager ResourceManager { private get; set; }
+        public static Supply InitialSupply => new(TOWNHALL_SUPPLY, INITIAL_WORKERS);
 
         //Nodes
 
@@ -39,6 +40,7 @@ namespace starcraftbuildtrainer.scripts
         private const double WORKER_MINERALS_PER_SECOND = 1.0;
         private const double WORKER_GAS_PER_SECOND = 1.0;
         private const int INITIAL_WORKERS = 12;
+        private const uint TOWNHALL_SUPPLY = 15; //TODO move to building data
 
         public override void _Ready()
         {
@@ -86,11 +88,11 @@ namespace starcraftbuildtrainer.scripts
 
         public void Init()
         {
-            Assert.That(PaymentProcessor is not null, "Payment Processor Uninitialized");
+            Assert.That(ResourceManager is not null, "Payment Processor Uninitialized");
 
             _mineralsControl.WorkerCount = INITIAL_WORKERS;
 
-            _townhallControl.PaymentProcessor = PaymentProcessor;
+            _townhallControl.PaymentProcessor = ResourceManager;
             _townhallControl.Init();
         }
 
@@ -129,14 +131,23 @@ namespace starcraftbuildtrainer.scripts
             }
         }
 
-        private void BuildBuilding(BuildingIdentity buildingIdentity)
+        private void BuildBuilding(BuildingIdentity identity)
         {
-            var data = BuildingData.Map[buildingIdentity];
-            if (PaymentProcessor.MakePayment(data.Cost))
+            var data = BuildingData.Map[identity];
+            if (ResourceManager.MakePayment(data.Cost))
             {
                 var building = new BuildingControl(data, _columnWidth);
+                building.ConstructionComplete += OnBuildingConstructionComplete;
                 _buildingGrid.AddChild(building);
             }
+        }
+
+        private void OnBuildingConstructionComplete(BuildingData data)
+        {
+            if (data.Supply > 0)
+            {
+                ResourceManager.AddSupplyTotal(data.Supply);
+            }            
         }
     }
 }

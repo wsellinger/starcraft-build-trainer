@@ -40,7 +40,6 @@ namespace starcraftbuildtrainer.scripts
         private int _workerCount;
         private bool _isMenuOpen;
 
-        //TODO implement supply
         //TODO implement construction of refinery
         //TODO implement gather button logic
 

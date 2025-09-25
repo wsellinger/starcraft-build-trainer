@@ -7,7 +7,7 @@ namespace starcraftbuildtrainer.scripts
     {
         //Events
 
-        public event Action<BuildingIdentity> ConstructionComplete;
+        public event Action<BuildingData> ConstructionComplete;
 
         //Properties
 
@@ -59,9 +59,10 @@ namespace starcraftbuildtrainer.scripts
 
                 if (_progress >= Data.BuildTime)
                 {
+                    _constructed = true;
                     _progressBar.Hide();
                     _display.Texture = ResourceLoader.Load<Texture2D>(Data.CompleteTexturePath);
-                    ConstructionComplete?.Invoke(Data.Identity);
+                    ConstructionComplete?.Invoke(Data);
                 }
             }
         }

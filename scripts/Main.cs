@@ -31,7 +31,7 @@ namespace starcraftbuildtrainer.scripts
             _gameOverControl.Restart += OnRestart;
 
             //Initial Values
-            _outpostControl.PaymentProcessor = _resourceControl;
+            _outpostControl.ResourceManager = _resourceControl;
 
             Init();
         }
@@ -49,7 +49,7 @@ namespace starcraftbuildtrainer.scripts
         private void Init()
         {
             _outpostControl.Init();
-            _resourceControl.Init();
+            _resourceControl.Init(OutpostControl.InitialSupply);
             _objectiveControl.Init();
             _gameOverControl.Init();
         }

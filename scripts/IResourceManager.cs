@@ -1,7 +1,8 @@
 namespace starcraftbuildtrainer.scripts
 {
-    public interface IPaymentProcessor
+    public interface IResourceManager
     {
         public bool MakePayment(ResourceCost cost);
+        public void AddSupplyTotal(uint value);
     }
 }

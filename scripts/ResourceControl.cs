@@ -3,18 +3,21 @@ using Godot;
 namespace starcraftbuildtrainer.scripts
 {
 
-    public partial class ResourceControl : Control, IPaymentProcessor
+    public partial class ResourceControl : Control, IResourceManager
     {
-        public double Minerals { get => _resources.Minerals; }
-        public double Gas { get => _resources.Gas; }
+        public double Minerals => _resources.Minerals;
+        public double Gas => _resources.Gas;
+        public Supply Supply => _resources.Supply;
 
         //Nodes
 
         private Label _mineralsLabel;
         private Label _gasLabel;
+        private Label _supplyLabel;
 
         private const string MINERALS_LABEL_NAME = "MineralsLabel";
         private const string GAS_LABEL_NAME = "GasLabel";
+        private const string SUPPLY_LABEL_NAME = "SupplyLabel";
 
         //Data
 
@@ -23,28 +26,35 @@ namespace starcraftbuildtrainer.scripts
         //Defaults
 
         private const int INITIAL_MINERALS = 50;
-        private const int INITIAL_GAS = 0;
+
+        public ResourceControl()
+        {
+            _resources = new Resources(INITIAL_MINERALS, 0, new(0, 0));
+        }
 
         public override void _Ready()
         {
             _mineralsLabel = GetNode<Label>(MINERALS_LABEL_NAME);
             _gasLabel = GetNode<Label>(GAS_LABEL_NAME);
+            _supplyLabel = GetNode<Label>(SUPPLY_LABEL_NAME);
         }
 
         public override void _Process(double delta)
         {
             _mineralsLabel.Text = Mathf.Round(_resources.Minerals).ToString();
             _gasLabel.Text = Mathf.Round(_resources.Gas).ToString();
+            _supplyLabel.Text = $"{Supply.Used} / {Supply.Total}";
         }
 
-        public void Init()
+        public void Init(Supply supply)
         {
-            _resources.Minerals = INITIAL_MINERALS;
-            _resources.Gas = INITIAL_GAS;
+            _resources.Supply = supply;
         }
 
         public void AddMinerals(double value) => _resources.Minerals += value;
         public void AddGas(double value) => _resources.Gas += value;
+
+        public void AddSupplyTotal(uint value) => _resources.Supply.Total += value;
 
         public bool MakePayment(ResourceCost cost)
         {
@@ -58,12 +68,16 @@ namespace starcraftbuildtrainer.scripts
 
             if (cost.Gas > _resources.Gas)
             {
+                result = false;
+                //TODO display error
+            }
+
+            if (cost.Supply > _resources.Supply.Availiable)
+            {
                 //TODO display error
                 result = false;
             }
-
-            //TODO add supply check
-
+             
             if (result is true)
             {
                 _resources -= cost;
@@ -72,20 +86,27 @@ namespace starcraftbuildtrainer.scripts
             return result;
         }
 
-        private struct Resources(uint minerals, uint gas)
+        private class Resources(uint minerals, uint gas, Supply supply)
         {
             public double Minerals { get; set; } = minerals;
             public double Gas { get; set; } = gas;
+            public Supply Supply { get; set; } = supply;
 
-            public static implicit operator Resources(ResourceCost cost) => new(cost.Minerals, cost.Gas);
-
-            public static Resources operator -(Resources minuend, Resources subtrahend)
+            public static Resources operator -(Resources resource, ResourceCost cost)
             {
-                minuend.Minerals -= subtrahend.Minerals;
-                minuend.Gas -= subtrahend.Gas;
-                return minuend;
+                resource.Minerals -= cost.Minerals;
+                resource.Gas -= cost.Gas;
+                resource.Supply.Used += cost.Supply;
+                return resource;
             }
         }
+    }
+
+    public class Supply(uint total, uint used)
+    {
+        public uint Total { get; set; } = total;
+        public uint Used { get; set; } = used;
+        public uint Availiable => Total > Used ? Total - Used : 0;
     }
 }
 

@@ -10,7 +10,7 @@ namespace starcraftbuildtrainer.scripts
 
         //References
 
-        public IPaymentProcessor PaymentProcessor { private get; set; }
+        public IResourceManager PaymentProcessor { private get; set; }
 
         //Nodes
 
@@ -32,7 +32,7 @@ namespace starcraftbuildtrainer.scripts
 
         private const int UNIT_BUILD_TIME = 12;
         private const int MAX_UNITS_IN_QUEUE = 5;
-        private readonly ResourceCost _workerResourceCost = new(50, 0);
+        private readonly ResourceCost _workerResourceCost = new(50, 0, 1); //TODO move this to UnitData once it exists
 
         private const float PRODUCTION_BUTTON_X_BUFFER = 10;
         private const string UNIT_TEXTURE_PATH = "res://assets/art/terran/units/scv.png";
@@ -112,11 +112,11 @@ namespace starcraftbuildtrainer.scripts
         {
             if (_workersInBuildQueue >= MAX_UNITS_IN_QUEUE)
             {
-                //TODO Display Error
+                //TODO display error
                 return;
             }
 
-            if (PaymentProcessor.MakePayment(_workerResourceCost))
+            if (PaymentProcessor.MakePayment(_workerResourceCost)) //TODO implement delayed supply payment once we switch to UnitData based queue
             {
                 _workersInBuildQueue++;
                 _progressBar.Show();
