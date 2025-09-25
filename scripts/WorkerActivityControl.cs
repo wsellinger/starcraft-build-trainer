@@ -42,7 +42,7 @@ namespace starcraftbuildtrainer.scripts
 
         //TODO implement supply
         //TODO implement construction of refinery
-        //TODO implement gotoMinerals and gotoGas on the appropriate controls
+        //TODO implement gather button logic
 
         public override void _Ready()
         {
@@ -84,8 +84,8 @@ namespace starcraftbuildtrainer.scripts
 
         private void OnWorkerButtonPressed()
         {
-            if (!_isMenuOpen)
-                OpenMenu(); //TODO check if workers > 0 before opening
+            if (!_isMenuOpen && _workerCount > 0)
+                OpenMenu();
             else
                 CloseMenu();
         }
