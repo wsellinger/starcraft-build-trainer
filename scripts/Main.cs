@@ -53,7 +53,8 @@ namespace starcraftbuildtrainer.scripts
                 return;
 
             //Update Objectives
-            _objectiveControl.CheckObjectiveComplete(_resourceControl.Minerals);
+            //TODO improve this when updating to handle more complex objectives, should be on build events and amount should be stored internal to objective control for display
+            _objectiveControl.CheckObjectiveComplete(_outpostControl.WorkerCount); 
         }
 
         private void Init()

@@ -33,6 +33,7 @@ namespace starcraftbuildtrainer.scripts
         //Defaults
 
         private const int INITIAL_MINERALS = 50;
+        private const int INITIAL_GAS = 0;
         private const string PAYMENT_FAILED_MESSAGE_MINERALS = "Not Enough Minerals";
         private const string PAYMENT_FAILED_MESSAGE_GAS = "Not Enough Gas";
         private const string PAYMENT_FAILED_MESSAGE_SUPPLY = "Not Enough Supply";
@@ -58,6 +59,8 @@ namespace starcraftbuildtrainer.scripts
 
         public void Init(Supply supply)
         {
+            _resources.Minerals = INITIAL_MINERALS;
+            _resources.Gas = INITIAL_GAS;
             _resources.Supply = supply;
         }
 

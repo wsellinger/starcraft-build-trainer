@@ -39,7 +39,6 @@ grow_horizontal = 0
 [node name="ObjectiveControl" parent="." instance=ExtResource("7_o6xl0")]
 
 [node name="GameOverControl" parent="." instance=ExtResource("8_85g3d")]
-visible = false
 
 [node name="MessageControl" type="Control" parent="."]
 layout_mode = 3

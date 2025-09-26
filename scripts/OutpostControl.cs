@@ -11,10 +11,11 @@ namespace starcraftbuildtrainer.scripts
         public event Action<double> GasMined;
         public event Action<string> MessageDispatched;
 
-        //References
+        //Properties
 
         public IResourceManager ResourceManager { private get; set; }
         public static Supply InitialSupply => new(TOWNHALL_SUPPLY, INITIAL_WORKERS);
+        public int WorkerCount => _mineralsControl.WorkerCount;
 
         //Nodes
 

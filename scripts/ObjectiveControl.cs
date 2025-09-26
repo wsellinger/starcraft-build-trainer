@@ -17,11 +17,11 @@ namespace starcraftbuildtrainer.scripts
         private const string OBJECTIVE_LABEL_NAME = "ObjectiveLabel";
         private const string TIMER_LABEL_NAME = "TimerLabel";
 
-        private readonly TimeSpan INITIAL_TIMER_SPAN = new(0, 1, 0);
+        private readonly TimeSpan INITIAL_TIMER_SPAN = new(0, 1, 15);
         private const string TIMER_FORMAT = @"mm\:ss";
 
-        private const int MINERAL_WIN_COUNT = 750;
-        private const string OBJECTIVE_FORMAT = "Mine {0} Minerals";
+        private const int WORKER_WIN_COUNT = 16;
+        private const string OBJECTIVE_FORMAT = "Build {0} SCVs";
 
         public override void _Ready()
         {
@@ -47,15 +47,13 @@ namespace starcraftbuildtrainer.scripts
         public void Init()
         {
             _state = ObjectiveState.InProgress;
-            _objectiveLabel.Text = string.Format(OBJECTIVE_FORMAT, MINERAL_WIN_COUNT);
+            _objectiveLabel.Text = string.Format(OBJECTIVE_FORMAT, WORKER_WIN_COUNT);
             _timerSeconds = INITIAL_TIMER_SPAN.TotalSeconds;
         }
 
-        public static bool IsObjectiveComplete(double mineralCount) => mineralCount >= MINERAL_WIN_COUNT;
-
-        public void CheckObjectiveComplete(double mineralCount)
+        public void CheckObjectiveComplete(double workerCount)
         {
-            if (mineralCount >= MINERAL_WIN_COUNT)
+            if (workerCount >= WORKER_WIN_COUNT)
                 EmitSignal(SignalName.ObjectiveStateChange, (int)ObjectiveState.Complete);
         }
     }

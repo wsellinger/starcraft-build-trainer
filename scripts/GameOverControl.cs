@@ -1,4 +1,5 @@
 using Godot;
+using starcraftbuildtrainer.extensions;
 
 namespace starcraftbuildtrainer.scripts
 {
@@ -9,7 +10,7 @@ namespace starcraftbuildtrainer.scripts
         public bool IsGameOver { get; set; }
 
         //Nodes
-
+        
         private Control _victoryScreen;
         private Control _defeatScreen;
         private Button _restartButton;
@@ -23,7 +24,6 @@ namespace starcraftbuildtrainer.scripts
             _victoryScreen = GetNode<Control>(VICTORY_SCREEN_NAME);
             _defeatScreen = GetNode<Control>(DEFEAT_SCREEN_NAME);
             _restartButton = GetNode<Button>(RESTART_BUTTON_NAME);
-
             _restartButton.Pressed += OnRestartButtonPressed;
         }
 
@@ -31,6 +31,7 @@ namespace starcraftbuildtrainer.scripts
         {
             IsGameOver = false;
 
+            this.MoveToBack();
             _victoryScreen.Hide();
             _defeatScreen.Hide();
             _restartButton.Hide();
@@ -53,6 +54,7 @@ namespace starcraftbuildtrainer.scripts
 
         private void GameOver(Control screen)
         {
+            MoveToFront();
             screen.Show();
             _restartButton.Show();
             IsGameOver = true;
@@ -60,6 +62,7 @@ namespace starcraftbuildtrainer.scripts
 
         private void OnRestartButtonPressed()
         {
+            this.MoveToBack();
             EmitSignal(SignalName.Restart);
         }
     }

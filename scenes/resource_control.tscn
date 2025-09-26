@@ -46,6 +46,7 @@ text = "100000"
 vertical_alignment = 2
 
 [node name="SupplyIcon" type="TextureRect" parent="."]
+layout_mode = 0
 offset_left = 388.0
 offset_top = 5.0
 offset_right = 445.0
@@ -53,6 +54,7 @@ offset_bottom = 57.0
 texture = ExtResource("4_rb65w")
 
 [node name="SupplyLabel" type="Label" parent="."]
+layout_mode = 0
 offset_left = 456.0
 offset_top = 8.0
 offset_right = 576.0
