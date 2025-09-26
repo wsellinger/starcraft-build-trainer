@@ -1,10 +1,17 @@
 using Godot;
+using System;
 
 namespace starcraftbuildtrainer.scripts
 {
 
     public partial class ResourceControl : Control, IResourceManager
     {
+        //Events
+
+        public event Action<string> MessageDispatched;
+        
+        //Properties
+
         public double Minerals => _resources.Minerals;
         public double Gas => _resources.Gas;
         public Supply Supply => _resources.Supply;
@@ -26,6 +33,9 @@ namespace starcraftbuildtrainer.scripts
         //Defaults
 
         private const int INITIAL_MINERALS = 50;
+        private const string PAYMENT_FAILED_MESSAGE_MINERALS = "Not Enough Minerals";
+        private const string PAYMENT_FAILED_MESSAGE_GAS = "Not Enough Gas";
+        private const string PAYMENT_FAILED_MESSAGE_SUPPLY = "Not Enough Supply";
 
         public ResourceControl()
         {
@@ -62,19 +72,19 @@ namespace starcraftbuildtrainer.scripts
 
             if (cost.Minerals > _resources.Minerals)
             {
-                //TODO display error
+                MessageDispatched.Invoke(PAYMENT_FAILED_MESSAGE_MINERALS);
                 result = false;
             }
 
             if (cost.Gas > _resources.Gas)
             {
+                MessageDispatched.Invoke(PAYMENT_FAILED_MESSAGE_GAS);
                 result = false;
-                //TODO display error
             }
 
             if (cost.Supply > _resources.Supply.Availiable)
             {
-                //TODO display error
+                MessageDispatched.Invoke(PAYMENT_FAILED_MESSAGE_SUPPLY);
                 result = false;
             }
              

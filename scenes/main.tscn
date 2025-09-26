@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://bm46ys1npg741"]
+[gd_scene load_steps=7 format=3 uid="uid://bm46ys1npg741"]
 
 [ext_resource type="Script" uid="uid://vw4kgabkijq3" path="res://scripts/Main.cs" id="1_o5qli"]
 [ext_resource type="PackedScene" uid="uid://br0afaoskdis6" path="res://scenes/outpost_control.tscn" id="2_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://dwhswro8m4g78" path="res://scenes/resource_control.tscn" id="5_o6xl0"]
+[ext_resource type="Script" uid="uid://yfci6kja6ss0" path="res://scripts/MessageControl.cs" id="6_tefeu"]
 [ext_resource type="PackedScene" uid="uid://yjjrd7rhl57a" path="res://scenes/objective_control.tscn" id="7_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://cogynxfv56566" path="res://scenes/game_over_control.tscn" id="8_85g3d"]
 
@@ -39,3 +40,17 @@ grow_horizontal = 0
 
 [node name="GameOverControl" parent="." instance=ExtResource("8_85g3d")]
 visible = false
+
+[node name="MessageControl" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 80.0
+offset_top = 584.0
+offset_right = 720.0
+offset_bottom = 832.0
+script = ExtResource("6_tefeu")
+
+[node name="ReferenceRect" type="ReferenceRect" parent="MessageControl"]
+layout_mode = 0
+offset_right = 640.0
+offset_bottom = 248.0

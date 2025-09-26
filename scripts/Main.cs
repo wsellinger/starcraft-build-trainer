@@ -10,11 +10,13 @@ namespace starcraftbuildtrainer.scripts
         private ResourceControl _resourceControl;
         private ObjectiveControl _objectiveControl;
         private GameOverControl _gameOverControl;
+        private MessageControl _messageControl;
 
         private const string OUTPOST_CONTROL_NAME = "OutpostControl";
         private const string OBJECTIVE_CONTROL_NAME = "ObjectiveControl";
         private const string RESOURCE_CONTROL_NAME = "ResourceControl";
         private const string GAME_OVER_CONTROL_NAME = "GameOverControl";
+        private const string MESSAGE_CONTROL_NAME = "MessageControl";
 
         public override void _Ready()
         {
@@ -23,10 +25,13 @@ namespace starcraftbuildtrainer.scripts
             _resourceControl = GetNode<ResourceControl>(RESOURCE_CONTROL_NAME);
             _objectiveControl = GetNode<ObjectiveControl>(OBJECTIVE_CONTROL_NAME);
             _gameOverControl = GetNode<GameOverControl>(GAME_OVER_CONTROL_NAME);
+            _messageControl = GetNode<MessageControl>(MESSAGE_CONTROL_NAME);
 
             //Callbacks
             _outpostControl.MineralsMined += OnMineralsMined;
             _outpostControl.GasMined += OnGasMined;
+            _outpostControl.MessageDispatched += OnMessageDispatched;
+            _resourceControl.MessageDispatched += OnMessageDispatched;
             _objectiveControl.ObjectiveStateChange += OnObjectiveStateChange;
             _gameOverControl.Restart += OnRestart;
 
@@ -34,6 +39,11 @@ namespace starcraftbuildtrainer.scripts
             _outpostControl.ResourceManager = _resourceControl;
 
             Init();
+        }
+
+        private void OnMessageDispatched(string message)
+        {
+            _messageControl.DisplayMessage(message);
         }
 
         public override void _Process(double delta)

@@ -5,8 +5,9 @@ namespace starcraftbuildtrainer.scripts
 {
     public partial class ProductionBuildingControl : Control
     {
-        //Signals
-        [Signal] public delegate void UnitProducedEventHandler();
+        //Events
+        public event Action UnitProduced;
+        public event Action<string> MessageDispatched;
 
         //References
 
@@ -36,6 +37,7 @@ namespace starcraftbuildtrainer.scripts
 
         private const float PRODUCTION_BUTTON_X_BUFFER = 10;
         private const string UNIT_TEXTURE_PATH = "res://assets/art/terran/units/scv.png";
+        private const string QUEUE_LIMIT_REACHED_MESSAGE = "Queue Limit Reached";
 
         public override void _Ready()
         {
@@ -76,7 +78,7 @@ namespace starcraftbuildtrainer.scripts
                 if (_workerBuildProgress >= UNIT_BUILD_TIME)
                 {
                     _workersInBuildQueue--;
-                    EmitSignal(SignalName.UnitProduced);
+                    UnitProduced.Invoke();
                     _workerBuildProgress = 0;
 
                     if (_workersInBuildQueue == 0)
@@ -112,7 +114,7 @@ namespace starcraftbuildtrainer.scripts
         {
             if (_workersInBuildQueue >= MAX_UNITS_IN_QUEUE)
             {
-                //TODO display error
+                MessageDispatched.Invoke(QUEUE_LIMIT_REACHED_MESSAGE);
                 return;
             }
 

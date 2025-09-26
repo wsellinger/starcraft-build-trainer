@@ -5,10 +5,11 @@ namespace starcraftbuildtrainer.scripts
 {
     public partial class OutpostControl : Control
     {
-        //Signals
+        //Events
 
-        [Signal] public delegate void MineralsMinedEventHandler(double value);
-        [Signal] public delegate void GasMinedEventHandler(double value);
+        public event Action<double> MineralsMined;
+        public event Action<double> GasMined;
+        public event Action<string> MessageDispatched;
 
         //References
 
@@ -66,6 +67,7 @@ namespace starcraftbuildtrainer.scripts
             
             //Callbacks
             _townhallControl.UnitProduced += OnWorkerProduced;
+            _townhallControl.MessageDispatched += OnMessageDispatched;
 
             foreach (var menuControl in _menuControls)
             {
@@ -79,11 +81,11 @@ namespace starcraftbuildtrainer.scripts
             //TODO move econ updates to signals emitted from workerActivityControls once we move to individual workers
             //Update Economy
             if (_mineralsControl.WorkerCount > 0)
-                EmitSignal(SignalName.MineralsMined, _mineralsControl.WorkerCount * WORKER_MINERALS_PER_SECOND * delta);
+                MineralsMined.Invoke(_mineralsControl.WorkerCount * WORKER_MINERALS_PER_SECOND * delta);
 
             foreach (var gasControl in _gasControls)
                 if (gasControl.WorkerCount > 0)
-                    EmitSignal(SignalName.GasMined, gasControl.WorkerCount * WORKER_GAS_PER_SECOND * delta);
+                    GasMined.Invoke(gasControl.WorkerCount * WORKER_GAS_PER_SECOND * delta);
         }
 
         public void Init()
@@ -129,6 +131,11 @@ namespace starcraftbuildtrainer.scripts
                 default:
                     break;
             }
+        }
+
+        private void OnMessageDispatched(string message)
+        {
+            MessageDispatched.Invoke(message);
         }
 
         private void BuildBuilding(BuildingIdentity identity)
